@@ -1,0 +1,38 @@
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<nav class="navbar navbar-expand-lg bg-secondary text-white d-flex justify-content-center">
+    <h1 class="p-3">Detail</h1>
+    <div class="flex p-2">
+        <a class="text-white" href="">Votes</a>
+        <a class="text-white" href="">Choice</a>
+        <a class="text-white" href="">Deepthoughts</a>
+    </div>
+</nav>
+
+<h1>{{ question.question_text }}</h1>
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ul>
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Vote">
+    </form>
+
+    <footer class="page-footer bg-primary font-small text-white">
+        <div class="footer-copyright text-center py-3">© 2022 Jay Chadha(jrc7qt)
+        </div>
+      </footer>

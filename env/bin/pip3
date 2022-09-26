@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/jay/Documents/College/Third Year/Advanced/Repositories/project-a-20/env/bin/python3.10" "$0" "$@"
+'''exec' "/Users/jay/Documents/College/Third Year/Advanced/Repositories/DjangoTutorial/django-JayChadha-uva/env/bin/python3.9" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

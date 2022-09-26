@@ -36,25 +36,6 @@ class ResultsView(generic.DetailView):
 
 
 
-def deepthought(request):
-    if(request.method == "POST"):
-        title = request.POST.get("title", "")
-        description = request.POST.get("description", "")
-        form = Thought()
-        form.title = title
-        form.description = description
-        form.save()
-    else:
-        form = Thought()
-    return render(request, 'polls/deepthought.html', {'form': form})
-
-
-def list(request):
-    fd = Thought.objects.all()
-    return render(request, 'polls/list.html', context={'objects': fd})
-
-
-
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:

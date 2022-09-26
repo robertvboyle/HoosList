@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Question, Choice, Thought
+from .models import Question, Choice
 
 
 class ChoiceInline(admin.TabularInline):
@@ -17,9 +17,6 @@ class QuestionAdmin(admin.ModelAdmin):
     ]
     inlines = [ChoiceInline]
 
-class DeepthoughtAdmin(admin.ModelAdmin):
-    model = Thought
 
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Thought, DeepthoughtAdmin)

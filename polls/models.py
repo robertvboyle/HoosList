@@ -21,12 +21,6 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
-class Thought(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.CharField(max_length=2000)
-
-    def __str__(self):
-        return self.title
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)

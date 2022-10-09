@@ -11,5 +11,5 @@ urlpatterns = [
     path('<int:question_id>/vote/', views.vote, name='vote'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('login', include('main.urls')),
+    #path('login', include('main.urls')),
 ]

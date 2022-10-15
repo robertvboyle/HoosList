@@ -3,12 +3,10 @@ from django.contrib import admin
 
 from . import views
 
-app_name = 'polls'
+app_name = 'louslist'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
-    path('<int:pk>/', views.DetailView.as_view(), name='detail'),
-    path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
-    path('<int:question_id>/vote/', views.vote, name='vote'),
+    path('login/', views.LoginView.as_view(), name='login'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     #path('login', include('main.urls')),

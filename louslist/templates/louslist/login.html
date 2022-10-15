@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<meta name="google-signin-client_id" content="325930513099-ibniatcvkcusnjiqhuised9uviau90fh.apps.googleusercontent.com">
+
+<script>
+gapi.load('auth2', function() {
+    gapi.auth2.init();
+})
+</script>
+
+
+<script>
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        window.location.replace("https://a20-uva.herokuapp.com/louslist");
+        }
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
+
+<html lang="en container wx-50">
+  <head>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+  </head>
+  <body class="text-center justify-content-center container px-3 py-5 w-25">
+    <form class="form-signin">
+      <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      {% csrf_token %}
+      <input id="inputEmail" class="form-control w-15" placeholder="Email address" required="" autofocus="" type="email">
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input id="inputPassword" class="form-control w-15" placeholder="Password" required="" type="password">
+      <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Sign in</button>
+      
+    </form>
+
+    {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }} !</p>
+    <a href="#" onclick="signOut();">Sign out</a>
+
+    {% else %}
+        <h1></h1>
+        <center>
+        <div class="g-signin2 mt-5" data-onsuccess="onSignIn"></div>
+        </center>
+    {% endif %}
+
+    <footer class="page-footer bg-primary font-small text-black fixed-bottom">
+        <div class="footer-copyright text-center py-3">© 2022 TEAM A-20
+        </div>
+    </footer>
+  </body>
+</html>
+
+
+
+<!-- 
+    reference:
+    https://stackoverflow.com/questions/26585754/writing-a-django-login-page-with-bootstrap -->

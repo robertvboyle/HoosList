@@ -1,0 +1,49 @@
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+
+<head>
+  {% load static %}
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-secondary text-white d-flex justify-content-center">
+    <h1 class="p-3">UVa Class Schedules</h1>
+    <div class="flex p-2">
+
+    </div>
+  </nav>
+
+  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+    <img src="https://cdn0.iconfinder.com/data/icons/rounded-basics/24/rounded__menu-512.png" width="25">
+  </button>
+  
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+        <p>We eventually need to dynamically create a logout or profile button depending on the login status</p>
+        <a class="mt-10 btn btn-primary wx-15" href="{% url 'louslist:login'%}">Log Out</a>
+      </div>
+        
+    </div>
+  </div>
+
+
+  <footer class="page-footer bg-primary font-small text-black fixed-bottom">
+      <div class="footer-copyright text-center py-3">© 2022 TEAM A-20
+      </div>
+  </footer>
+</body>
+
+

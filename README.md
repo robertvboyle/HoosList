@@ -1,6 +1,3 @@
-# Django Practice Assessment
+# Team A-20 Lous List
 
-__Name:__ Jay Chadha
-
-__Computing ID:__ jrc7qt
 

@@ -49,8 +49,9 @@ gapi.load('auth2', function() {
       
     </form>
 
+    
     {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
+    <p>Welcome, {{ profile.getName() }} !</p>
     <a href="#" onclick="signOut();">Sign out</a>
 
     {% else %}

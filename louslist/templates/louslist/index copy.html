@@ -14,10 +14,17 @@ gapi.load('auth2', function() {
 </script>
 
 <nav class="navbar navbar-expand-lg bg-secondary text-white d-flex justify-content-center">
+  <span class="navbar-text-left">
+    Signed in as 
+    <script>
+      profile.getName();
+    </script>
+  </span>
     <h1 class="p-3">UVa Class Schedules</h1>
     <div class="flex p-2">
 
     </div>
+    
 </nav>
 
 

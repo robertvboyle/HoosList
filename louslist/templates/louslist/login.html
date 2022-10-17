@@ -35,6 +35,7 @@ gapi.load('auth2', function() {
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    {% load socialaccount %}
 
   </head>
   <body class="text-center justify-content-center container px-3 py-5 w-25">
@@ -49,17 +50,14 @@ gapi.load('auth2', function() {
       
     </form>
 
+    <h1 class="h3 mb-3 font-weight-normal">hello {{ user.first_name }}</h1>
     
-    {% if user.is_authenticated %}
-    <p>Welcome, {{ profile.getName() }} !</p>
-    <a href="#" onclick="signOut();">Sign out</a>
-
-    {% else %}
+    
         <h1></h1>
         <center>
         <div class="g-signin2 mt-5" data-onsuccess="onSignIn"></div>
         </center>
-    {% endif %}
+    
 
     <footer class="page-footer bg-primary font-small text-black fixed-bottom">
         <div class="footer-copyright text-center py-3">© 2022 TEAM A-20

@@ -9,5 +9,6 @@ urlpatterns = [
     path('login/', views.LoginView.as_view(), name='login'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('<str:department>', views.DepartmentView.as_view(), name='departmemt')
     #path('login', include('main.urls')),
 ]

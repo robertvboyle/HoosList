@@ -1,3 +1,3 @@
 from django.contrib import admin
 
-from .models import Department, User
+from .models import User

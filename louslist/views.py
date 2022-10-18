@@ -48,18 +48,6 @@ class DepartmentView(generic.ListView):
 
 
 
-
-# def department(request, deptStr):
-#     template_name = 'louslist/department.html'
-#     url = "http://luthers-list.herokuapp.com/api/dept/%c/?format=json" % (deptStr)
-#     response = urllib.request.urlopen(url)
-#     data = json.loads(response.read())
-
-#     context= {
-#             'data' : data,
-#         }
-
-#     return context
     
 
 class LoginView(generic.ListView):

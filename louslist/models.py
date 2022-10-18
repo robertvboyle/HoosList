@@ -13,3 +13,6 @@ class User(models.Model):
     image = models.ImageField
     email = models.CharField(max_length=30)
 
+
+class Department(models.Model):
+    name = models.CharField(max_length=15)

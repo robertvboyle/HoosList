@@ -2,20 +2,23 @@
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
-{% load socialaccount %}
 
 
 
+<head>
+  {% load static %}
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
 
+</head>
 
 <body>
   <nav class="navbar navbar-expand-lg bg-secondary text-white d-flex justify-content-center">
-
-    
     <h1 class="p-3">UVa Class Schedules</h1>
     <div class="flex p-2">
-    </div>
 
+    </div>
   </nav>
 
   <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
@@ -23,20 +26,14 @@
   </button>
 
 
-  <li class="">
-    <a class="text-right font-italic" href="#">Signed in as {{user.first_name}}</a>
-  </li>
-
-
   <div class="d-flex justify-content-center">
     <ul class="list-group">
     {% for i in data %}
-      <li class="list-group-item"><a href="/{{ i.subject }}">{{i.subject}}</a></li>
+      <li class="list-group-item">{{i.description}}</li>
     {% endfor %}
   </ul>
 
   </div>
-
   
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
@@ -51,27 +48,6 @@
         
     </div>
   </div>
-
-  {% load socialaccount %}
-<html>
-
-<head>
-    <title>Google Registration</title>
-</head>
-
-<body>
-    <h1>My Google Login Project</h1>
-    {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
-
-    {% else %}
-    <h1>My Google Login Project</h1>
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
-    {% endif %}
-
-</body>
-
-</html>
 
 
   <footer class="page-footer bg-primary font-small text-black fixed-bottom">

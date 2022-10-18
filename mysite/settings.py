@@ -43,11 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'bootstrap5',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+  
 ]
 
 MIDDLEWARE = [
@@ -100,7 +102,7 @@ DATABASES = {
 
 }
 
-if 'test' in sys.argv:
+if True:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'mydatabase'
@@ -131,8 +133,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'louslist/'
+LOGOUT_REDIRECT_URL = 'louslist/'
 
 # Additional configuration settings
 SOCIALACCOUNT_QUERY_EMAIL = True
@@ -147,7 +149,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'email',
         ],
         'AUTH_PARAMS': {
-            'access_type': 'online',
+            'access_type': 'offline',
         }
     }
 }

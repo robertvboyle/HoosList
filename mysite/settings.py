@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'django.contrib.sites'
 ]
 
 MIDDLEWARE = [
@@ -131,7 +132,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/louslist'
 LOGOUT_REDIRECT_URL = '/'
 
 # Additional configuration settings

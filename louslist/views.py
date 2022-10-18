@@ -5,10 +5,24 @@ from django.views import generic
 from django.utils import timezone
 from django.template import loader
 
+import urllib, json
+
 
 
 class IndexView(generic.ListView):
     template_name = 'louslist/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        url = "http://luthers-list.herokuapp.com/api/deptlist/?format=json"
+        response = urllib.request.urlopen(url)
+        data = json.loads(response.read())
+
+        context= {
+            'data' : data,
+        }
+
+        return context
 
     def get_queryset(self):
         return ''
@@ -20,14 +34,3 @@ class LoginView(generic.ListView):
     def get_queryset(self):
         return ''
 
-
-
-
-def index(request):
-    template = loader.get_template('louslist/index.html')
-    context = {
-        'latest_question_list': ''
-    }
-    return HttpResponse(template.render(context, request))
-
-# Create your views here.

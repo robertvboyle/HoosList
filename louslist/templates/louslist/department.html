@@ -26,14 +26,38 @@
   </button>
 
 
-  <div class="d-flex justify-content-center">
-    <ul class="list-group">
-    {% for i in data %}
-      <li class="list-group-item">{{i.description}}</li>
-    {% endfor %}
-  </ul>
 
-  </div>
+  <ul class="d-flex justify-content-center list-group" style="padding: 80px">
+    {% regroup data by description as newList %}
+    {% for x in newList %}
+
+    <li class="list-group-item">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">{{x.list.0.subject}} {{x.list.0.catalog_number}}  {{x.grouper}}</th>
+            <th scope="col">Instructor</th>
+            <th scope="col">Capacity</th>
+            <th scope="col">Location</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for y in x.list %}     
+          <tr>
+            <th scope="row">{{y.meetings.0.start_time}} - {{y.meetings.0.end_time}}</th>
+            <td>{{y.instructor.name}}</td>
+            <td>{{y.class_capacity}}</td>
+            <td>{{y.meetings.0.facility_description}}</td>
+          </tr>
+      
+        {% endfor %}
+      </tbody>
+      </table>
+    </li>
+    
+    
+  {% endfor %}
+  </ul>
   
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">

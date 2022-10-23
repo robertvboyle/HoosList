@@ -12,22 +12,7 @@ gapi.load('auth2', function() {
 </script>
 
 
-<script>
-    function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-        window.location.replace("https://a20-uva.herokuapp.com/louslist");
-        }
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
+
 
 <html lang="en container wx-50">
   <head>
@@ -35,6 +20,7 @@ gapi.load('auth2', function() {
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    {% load socialaccount %}
 
   </head>
   <body class="text-center justify-content-center container px-3 py-5 w-25">
@@ -49,16 +35,15 @@ gapi.load('auth2', function() {
       
     </form>
 
-    {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
-    <a href="#" onclick="signOut();">Sign out</a>
-
-    {% else %}
+    <h1 class="h3 mb-3 font-weight-normal">hello {{ user.first_name }}</h1>
+    
+    
         <h1></h1>
         <center>
         <div class="g-signin2 mt-5" data-onsuccess="onSignIn"></div>
+        <a href="{% provider_login_url 'google' %}" class="btn"> Login With Google </a>
         </center>
-    {% endif %}
+    
 
     <footer class="page-footer bg-primary font-small text-black fixed-bottom">
         <div class="footer-copyright text-center py-3">© 2022 TEAM A-20

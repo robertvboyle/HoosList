@@ -14,17 +14,12 @@ gapi.load('auth2', function() {
 </script>
 
 <nav class="navbar navbar-expand-lg bg-secondary text-white d-flex justify-content-center">
-  <span class="navbar-text text-left">
-    Signed in as 
-    <script>
-      profile.getName();
-    </script>
-  </span>
-    <h1 class="p-3">UVa Class Schedules</h1>
+    <h1 class="p-3">Index</h1>
     <div class="flex p-2">
-
+        <a class="text-white" href="">Votes</a>
+        <a class="text-white" href="">Choice</a>
+        <a class="text-white" href="">Deepthoughts</a>
     </div>
-    
 </nav>
 
 
@@ -36,7 +31,6 @@ gapi.load('auth2', function() {
         console.log('Name: ' + profile.getName());
         console.log('Image URL: ' + profile.getImageUrl());
         console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-        window.location.replace("https://a20-uva.herokuapp.com/louslist");
         }
   function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
@@ -46,12 +40,26 @@ gapi.load('auth2', function() {
   }
 </script>
 
+{% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }} !</p>
+    <a href="#" onclick="signOut();">Sign out</a>
+
+{% else %}
     <h1></h1>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
+{% endif %}
 
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+    <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
 
-
-<footer class="page-footer bg-aquamarine font-small text-black-50 fixed-bottom">
-    <div class="footer-copyright text-center py-3">© 2022 TEAM A-20
+<footer class="page-footer bg-primary font-small text-white">
+    <div class="footer-copyright text-center py-3">© 2022 Jay Chadha(jrc7qt)
     </div>
   </footer>

@@ -1,3 +1,4 @@
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -53,7 +54,14 @@ class IndexView(generic.ListView):
                 rest.append(i['subject'])
                 
         context= {
-            'data' : data,
+            'seas' : seas,
+            'caas' : caas,
+            'edu' :edu,
+            'arch': arch,
+            'nurs':nurs,
+            'comm':comm,
+            'batt':batt,
+            'rest' : rest,
         }
 
         return context
@@ -71,6 +79,7 @@ class DepartmentView(generic.ListView):
         url = "http://luthers-list.herokuapp.com/api/dept/%s/?format=json" % (dept)
         response = urllib.request.urlopen(url)
         data = json.loads(response.read())
+
 
         context= {
             'data' : data,

@@ -2,28 +2,31 @@
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
+{% load socialaccount %}
 
 
 
-<head>
-  {% load static %}
-  {% load bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
 
-</head>
 
 <body>
   <nav class="navbar navbar-expand-lg bg-secondary text-white d-flex justify-content-center">
+
+    
     <h1 class="p-3">UVa Class Schedules</h1>
     <div class="flex p-2">
-
     </div>
+
   </nav>
 
   <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
     <img src="https://cdn0.iconfinder.com/data/icons/rounded-basics/24/rounded__menu-512.png" width="25">
   </button>
+
+
+
+  <li class="">
+    <a class="text-right font-italic" href="#">Signed in as {{user.first_name}}</a>
+  </li>
 
 
   <div class="d-flex justify-content-center">
@@ -33,7 +36,66 @@
     {% endfor %}
   </ul>
 
+  <div class="d-flex justify-content-center" style="padding-bottom: 80px; padding-top:10px">
+
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action active">College of Arts and Sciences</div>
+      {% for y in caas %}     
+        <a href="/{{y}}" class="list-group-item list-group-item-action">{{y}}</a>
+      {% endfor %}
+    </div>
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action active">School of Engineering and Applied Sciences</div>
+      {% for t in seas %}     
+        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
+      {% endfor %}
+    </div>
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action active">School of Education and Human Development</div>
+      {% for t in edu %}     
+        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
+      {% endfor %}
+    </div>
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action active">School of Architecture</div>
+      {% for t in arch %}     
+        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
+      {% endfor %}
+    </div>
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action active">School of Nursing</div>
+      {% for t in nurs %}     
+        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
+      {% endfor %}
+    </div>
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action active">McIntire School of Commerce</div>
+      {% for t in comm %}     
+        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
+      {% endfor %}
+    </div>
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action active">Frank Batten School of Leadership and Public Policy</div>
+      {% for t in batt %}     
+        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
+      {% endfor %}
+    </div>
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action active">Other Departments</div>
+      {% for t in rest %}     
+        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
+      {% endfor %}
+    </div>
   </div>
+
   
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
@@ -48,6 +110,27 @@
         
     </div>
   </div>
+
+  {% load socialaccount %}
+<html>
+
+<head>
+    <title>Google Registration</title>
+</head>
+
+<body>
+    <h1>My Google Login Project</h1>
+    {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }} !</p>
+
+    {% else %}
+    <h1>My Google Login Project</h1>
+    <a href="{% provider_login_url 'google' %}">Login with Google</a>
+    {% endif %}
+
+</body>
+
+</html>
 
 
   <footer class="page-footer bg-primary font-small text-black fixed-bottom">

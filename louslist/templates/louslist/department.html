@@ -36,14 +36,14 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">{{x.list.0.subject}} {{x.list.0.catalog_number}}  {{x.grouper}}</th>
+            <th scope="col">{{x.list.0.subject}} {{x.list.0.catalog_number}}  {{x.grouper}} - ({{x.list.0.units}} Credits)</th>
             <th scope="col">Instructor</th>
             <th scope="col">Seats Available</th>
             <th scope="col">Location</th>
           </tr>
         </thead>
         <tbody>
-        {% for y in x.list|dictsort:"enrollment_available" %}     
+        {% for y in x.list|sortMeeting %}     
           <tr>
             <th scope="row">
               {% for l in y.meetings %} 
@@ -60,7 +60,6 @@
                   <br>
                   <br>
               {% endfor %}
-
               </td>
           </tr>
       

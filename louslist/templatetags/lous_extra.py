@@ -22,6 +22,6 @@ def sortMeeting(value):
             value[i]["meetings"] = [{'days': '-', 'start_time': '', 'end_time': '', 'facility_description': '-'}]
 
     weekdays = ["MoWeFr","MoWe", "MoFr", "TuTh", "WeFr", "Mo", "Tu", "We", "Th", "Fr", "-"]
-    classType = ["LEC", "DIS", "LAB", "IND", "SPS"]
+    classType = ["LEC", "SEM", "DIS", "LAB", "IND", "SPS", "PRA"]
 
     return sorted(value, key=lambda valdict: (classType.index(valdict["component"]), weekdays.index(valdict["meetings"][0]["days"]), valdict["meetings"][0]["start_time"]))

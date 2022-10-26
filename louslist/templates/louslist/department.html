@@ -49,7 +49,7 @@
         <tbody>
         {% for y in x.list|sortMeeting %}     
           <tr>
-            <td style="width:20%">
+            <td style="width:25%">
               {% for l in y.meetings %} 
                   {{l.days}} {{l.start_time|convertTime }} - {{l.end_time|convertTime}}
                   <br>
@@ -57,10 +57,10 @@
               {% endfor %}
             </td>
             <td style="width:15%">{{y.component}} - {{y.units}} Credits</td>
-            <td style="width:15%">{{y.instructor.name}}</td>
-            <td style="width:15%">{{y.component}} {{y.enrollment_available}} / {{y.class_capacity}}</td>
+            <td style="width:20%">{{y.instructor.name}}</td>
+            <td style="width:10%">{{y.enrollment_available}} / {{y.class_capacity}}</td>
             <td style="width:10%">{{y.wait_list}} / {{y.wait_cap}}</td>
-            <td style="width:25%">
+            <td style="width:20%">
               {% for l in y.meetings %} 
                 {{l.facility_description}}
                   <br>

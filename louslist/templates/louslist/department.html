@@ -2,6 +2,7 @@
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
+{% load lous_extra %}
 
 
 
@@ -27,27 +28,45 @@
 
 
 
-  <ul class="d-flex justify-content-center list-group" style="padding: 80px">
+  <ul class="d-flex justify-content-center list-group px-5" style="padding-bottom: 80px">
     {% regroup data by description as newList %}
     {% for x in newList %}
+
+    <h4 class="pb-1 pt-4">{{x.list.0.subject}} {{x.list.0.catalog_number}}  {{x.grouper}}</h2>
 
     <li class="list-group-item">
       <table class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">{{x.list.0.subject}} {{x.list.0.catalog_number}}  {{x.grouper}}</th>
+            <th scope="col">Time</th>
+            <th scope="col">Type</th>
             <th scope="col">Instructor</th>
-            <th scope="col">Capacity</th>
+            <th  scope="col">Seats Available</th>
+            <th  scope="col">Wait List</th>
             <th scope="col">Location</th>
           </tr>
         </thead>
         <tbody>
-        {% for y in x.list %}     
+        {% for y in x.list|sortMeeting %}     
           <tr>
-            <th scope="row">{{y.meetings.0.start_time}} - {{y.meetings.0.end_time}}</th>
-            <td>{{y.instructor.name}}</td>
-            <td>{{y.class_capacity}}</td>
-            <td>{{y.meetings.0.facility_description}}</td>
+            <td style="width:25%">
+              {% for l in y.meetings %} 
+                  {{l.days}} {{l.start_time|convertTime }} - {{l.end_time|convertTime}}
+                  <br>
+                  <br>
+              {% endfor %}
+            </td>
+            <td style="width:15%">{{y.component}} - {{y.units}} Credits</td>
+            <td style="width:20%">{{y.instructor.name}}</td>
+            <td style="width:10%">{{y.enrollment_available}} / {{y.class_capacity}}</td>
+            <td style="width:10%">{{y.wait_list}} / {{y.wait_cap}}</td>
+            <td style="width:20%">
+              {% for l in y.meetings %} 
+                {{l.facility_description}}
+                  <br>
+                  <br>
+              {% endfor %}
+              </td>
           </tr>
       
         {% endfor %}
@@ -74,10 +93,7 @@
   </div>
 
 
-  <footer class="page-footer bg-primary font-small text-black fixed-bottom">
-      <div class="footer-copyright text-center py-3">© 2022 TEAM A-20
-      </div>
-  </footer>
+
 </body>
 
 

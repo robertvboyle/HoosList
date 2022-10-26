@@ -38,17 +38,30 @@
           <tr>
             <th scope="col">{{x.list.0.subject}} {{x.list.0.catalog_number}}  {{x.grouper}}</th>
             <th scope="col">Instructor</th>
-            <th scope="col">Capacity</th>
+            <th scope="col">Seats Available</th>
             <th scope="col">Location</th>
           </tr>
         </thead>
         <tbody>
-        {% for y in x.list %}     
+        {% for y in x.list|dictsort:"enrollment_available" %}     
           <tr>
-            <th scope="row">{{y.meetings.0.start_time|convertTime }} - {{y.meetings.0.end_time|convertTime}}</th>
+            <th scope="row">
+              {% for l in y.meetings %} 
+                  {{l.days}} {{l.start_time|convertTime }} - {{l.end_time|convertTime}}
+                  <br>
+                  <br>
+              {% endfor %}
+            </th>
             <td>{{y.instructor.name}}</td>
-            <td>{{y.class_capacity}}</td>
-            <td>{{y.meetings.0.facility_description}}</td>
+            <td>{{y.component}} {{y.enrollment_available}} / {{y.class_capacity}}</td>
+            <td>
+              {% for l in y.meetings %} 
+                {{l.facility_description}}
+                  <br>
+                  <br>
+              {% endfor %}
+
+              </td>
           </tr>
       
         {% endfor %}

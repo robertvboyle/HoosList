@@ -45,13 +45,13 @@
         <tbody>
         {% for y in x.list|sortMeeting %}     
           <tr>
-            <th scope="row">
+            <td>
               {% for l in y.meetings %} 
                   {{l.days}} {{l.start_time|convertTime }} - {{l.end_time|convertTime}}
                   <br>
                   <br>
               {% endfor %}
-            </th>
+            </td>
             <td>{{y.instructor.name}}</td>
             <td>{{y.component}} {{y.enrollment_available}} / {{y.class_capacity}}</td>
             <td>

@@ -25,7 +25,13 @@
 
 
   <li class="">
+    
+
+    {% if user.is_authenticated %}
     <a class="text-right font-italic" href="#">Signed in as {{user.first_name}}</a>
+    {% else %}
+    <a href="{% provider_login_url 'google' %}">Login with Google</a>
+    {% endif %}
   </li>
 
 
@@ -119,14 +125,7 @@
 </head>
 
 <body>
-    <h1>My Google Login Project</h1>
-    {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
-
-    {% else %}
-    <h1>My Google Login Project</h1>
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
-    {% endif %}
+    
 
 </body>
 

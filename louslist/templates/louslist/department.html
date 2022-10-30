@@ -2,6 +2,7 @@
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
+{% load lous_extra %}
 
 
 
@@ -27,7 +28,7 @@
 
 
 
-  <ul class="d-flex justify-content-center list-group" style="padding: 80px">
+  <ul class="d-flex justify-content-center list-group px-5" style="padding-bottom: 80px">
     {% regroup data by description as newList %}
     {% for x in newList %}
 
@@ -44,12 +45,13 @@
             <th scope="col">Type</th>
             <th scope="col">Time</th>
             <th scope="col">Instructor</th>
-            <th scope="col">Capacity</th>
+            <th  scope="col">Seats Available</th>
+            <th  scope="col">Wait List</th>
             <th scope="col">Location</th>
           </tr>
         </thead>
         <tbody>
-        {% for y in x.list %}     
+        {% for y in x.list|sortMeeting %}     
           <tr>
             <td style="width:15%">{{y.component}} - {{y.units}} Credits</td>
             <td style="width:25%">
@@ -95,10 +97,7 @@
   </div>
 
 
-  <footer class="page-footer bg-primary font-small text-black fixed-bottom">
-      <div class="footer-copyright text-center py-3">© 2022 TEAM A-20
-      </div>
-  </footer>
+
 </body>
 
 

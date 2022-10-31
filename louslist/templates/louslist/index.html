@@ -6,23 +6,11 @@
 
 
 
-
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </head>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <!-- Container wrapper -->
-  <div class="container-fluid">
-    <!-- Toggle button -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
 
     <!-- Collapsible wrapper -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -134,77 +122,179 @@
 
 
   <li class="">
+    
+
+    {% if user.is_authenticated %}
     <a class="text-right font-italic" href="#">Signed in as {{user.first_name}}</a>
+    {% else %}
+    <a href="{% provider_login_url 'google' %}">Login with Google</a>
+    {% endif %}
   </li>
 
 
-  <div class="d-flex justify-content-center">
-    <ul class="list-group">
-    {% for i in data %}
-      <li class="list-group-item"><a href="/{{ i.subject }}">{{i.subject}}</a></li>
-    {% endfor %}
-  </ul>
-
-  <div class="d-flex justify-content-center" style="padding-bottom: 80px; padding-top:10px">
-
-
-    <div class="list-group">
-      <div class="list-group-item list-group-item-action active">College of Arts and Sciences</div>
-      {% for y in caas %}     
-        <a href="/{{y}}" class="list-group-item list-group-item-action">{{y}}</a>
-      {% endfor %}
+  <div id="accordion" class="mx-3 my-2">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            College of Arts and Sciences
+          </button>
+        </h5>
+      </div>
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              {% for y in caas %}     
+              <div class="col-3 col-sm-3"><a href="/{{y}}" class="list-group-item list-group-item-action">{{y}}</a></div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="list-group">
-      <div class="list-group-item list-group-item-action active">School of Engineering and Applied Sciences</div>
-      {% for t in seas %}     
-        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
-      {% endfor %}
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            School of Engineering and Applied Sciences
+          </button>
+        </h5>
+      </div>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              {% for t in seas %}  
+              <div class="col-3 col-sm-3"><a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a></div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="list-group">
-      <div class="list-group-item list-group-item-action active">School of Education and Human Development</div>
-      {% for t in edu %}     
-        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
-      {% endfor %}
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree">
+            School of Education and Human Development
+          </button>
+        </h5>
+      </div>
+      <div id="collapseThree" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              {% for t in edu %}  
+              <div class="col-3 col-sm-3"><a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a></div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="list-group">
-      <div class="list-group-item list-group-item-action active">School of Architecture</div>
-      {% for t in arch %}     
-        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
-      {% endfor %}
+    <div class="card">
+      <div class="card-header" id="headingFour">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour">
+            School of Architecture
+          </button>
+        </h5>
+      </div>
+      <div id="collapseFour" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              {% for t in arch %}  
+              <div class="col-3 col-sm-3"><a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a></div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="list-group">
-      <div class="list-group-item list-group-item-action active">School of Nursing</div>
-      {% for t in nurs %}     
-        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
-      {% endfor %}
+    <div class="card">
+      <div class="card-header" id="headingFive">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive">
+            School of Nursing
+          </button>
+        </h5>
+      </div>
+      <div id="collapseFive" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              {% for t in nurs %}  
+              <div class="col-3 col-sm-3"><a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a></div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="list-group">
-      <div class="list-group-item list-group-item-action active">McIntire School of Commerce</div>
-      {% for t in comm %}     
-        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
-      {% endfor %}
+    <div class="card">
+      <div class="card-header" id="headingSix">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix">
+            McIntire School of Commerce
+            </button>
+        </h5>
+      </div>
+      <div id="collapseSix" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              {% for t in comm %}  
+              <div class="col-3 col-sm-3"><a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a></div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="list-group">
-      <div class="list-group-item list-group-item-action active">Frank Batten School of Leadership and Public Policy</div>
-      {% for t in batt %}     
-        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
-      {% endfor %}
+    <div class="card">
+      <div class="card-header" id="headingSeven">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven" >
+            Frank Batten School of Leadership and Public Policy
+            </button>
+        </h5>
+      </div>
+      <div id="collapseSeven" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              {% for t in batt %}  
+              <div class="col-3 col-sm-3"><a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a></div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="list-group">
-      <div class="list-group-item list-group-item-action active">Other Departments</div>
-      {% for t in rest %}     
-        <a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a>
-      {% endfor %}
+    <div class="card">
+      <div class="card-header" id="headingEight">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEight" >
+            Other Departments
+            </button>
+        </h5>
+      </div>
+      <div id="collapseEight" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              {% for t in rest %}  
+              <div class="col-3 col-sm-3"><a href="/{{t}}" class="list-group-item list-group-item-action">{{t}}</a></div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
+  
   
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
@@ -228,24 +318,13 @@
 </head>
 
 <body>
-    <h1>My Google Login Project</h1>
-    {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
-
-    {% else %}
-    <h1>My Google Login Project</h1>
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
-    {% endif %}
+    
 
 </body>
 
 </html>
 
 
-  <footer class="page-footer bg-primary font-small text-black fixed-bottom">
-      <div class="footer-copyright text-center py-3">© 2022 TEAM A-20
-      </div>
-  </footer>
 </body>
 
 

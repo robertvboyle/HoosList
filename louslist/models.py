@@ -26,9 +26,7 @@ class Schedule(models.Model):
         return self.user.username
 
 class Course(models.Model):
-    course_id = models.CharField(max_length=20)
     title = models.CharField(max_length=50)
-    description = models.CharField(max_length=1000)
     subject = models.CharField(max_length=20)
     number = models.IntegerField()
     section = models.IntegerField()

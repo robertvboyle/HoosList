@@ -8,6 +8,8 @@ from django.template import loader
 
 import urllib, json
 
+from louslist.models import Course
+
 
 class IndexView(generic.ListView):
     template_name = 'louslist/index.html'
@@ -105,3 +107,20 @@ class ProfileView(generic.ListView):
 
     def get_queryset(self):
         return ''
+
+def processClass(request):
+    if(request.method == "POST"):
+        form = Course()
+        form.title = request.POST.get("title")
+        form.subject = request.POST.get("subject")
+        form.number = request.POST.get("number")
+        form.section = request.POST.get("section")
+        form.credits = request.POST.get("credits")
+        form.instructor = request.POST.get("instructor")
+        form.days = request.POST.get("days")
+        form.time = request.POST.get("time")
+        form.location = request.POST.get("location")
+        form.save()
+
+
+    return HttpResponseRedirect('/')

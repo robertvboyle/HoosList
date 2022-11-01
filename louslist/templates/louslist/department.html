@@ -88,12 +88,20 @@
               {% endfor %}
               </td>
               {% if user.is_authenticated %}
-              <form action="/your-name/" method="post">
-                
-                <input id="your_name" type="hidden" name="your_name" value="{{x.grouper}}">
+              
+              <form action="/processClass/" method="post">
+                {% csrf_token %}
+                <input id="title" type="hidden" name="title" value="{{y.description}}">
+                <input id="subject" type="hidden" name="subject" value="{{y.subject}}">
+                <input id="number" type="hidden" name="number" value="{{y.catalog_number}}">
+                <input id="section" type="hidden" name="section" value="{{y.course_section}}">
+                <input id="credits" type="hidden" name="credits" value="{{y.units}}">
+                <input id="instructor" type="hidden" name="instructor" value="{{y.instructor.name}}">
+                <input id="days" type="hidden" name="days" value="{{y.meetings.0.days}}">
+                <input id="time" type="hidden" name="time" value="{{y.meetings.0.start_time}}">
+                <input id="location" type="hidden" name="location" value="{{y.meetings.0.facility_description}}">
 
-                
-                <td style="width:10%"><Button type="button" class="btn btn-secondary">Add</Button></td>
+                <td style="width:10%"><input type="submit" value="Add"></td>
             </form>
               
               {% endif %}

@@ -16,6 +16,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('<str:department>', views.DepartmentView.as_view(), name='department'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('processClass/', views.processClass, name="processClass"),
     #path('login', include('main.urls')),
 
 ]

@@ -100,3 +100,8 @@ class LoginView(generic.ListView):
     def get_queryset(self):
         return ''
 
+class ProfileView(generic.ListView):
+    template_name = 'louslist/profile.html'
+
+    def get_queryset(self):
+        return ''

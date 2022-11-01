@@ -26,4 +26,5 @@ def sortMeeting(value):
     classType = ["LEC", "SEM", "DIS", "LAB", "IND", "SPS", "PRA", "WKS", "STO", "CLN", "DRL"]
     classTypeSet = set(classType)
 
+
     return sorted(value, key=lambda valdict: (classType.index(valdict["component"]) if (valdict["component"] in classTypeSet) else len(classType)-1, weekdays.index(valdict["meetings"][0]["days"]) if (valdict["meetings"][0]["days"] in weekdaySet) else len(weekdays)-1, valdict["meetings"][0]["start_time"]))

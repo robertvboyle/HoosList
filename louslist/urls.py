@@ -14,7 +14,8 @@ urlpatterns = [
     #path('login', include('main.urls')),   
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('<str:department>', views.DepartmentView.as_view(), name='departmemt')
+    path('<str:department>', views.DepartmentView.as_view(), name='department'),
+    path('profile/', views.ProfileView.as_view(), name='profile'),
     #path('login', include('main.urls')),
 
 ]

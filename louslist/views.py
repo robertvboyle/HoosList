@@ -123,4 +123,4 @@ def processClass(request):
         form.save()
 
 
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('louslist:index'))

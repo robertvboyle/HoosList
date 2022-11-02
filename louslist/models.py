@@ -36,7 +36,7 @@ class Course(models.Model):
     time = models.CharField(max_length=20)
     location = models.CharField(max_length=20)
     def __str__(self):
-        return self.course_id
+        return self.title
 
 
 

@@ -45,14 +45,13 @@
         <title>Profile</title>
     </head>
     <body>
+        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="img">
         <h1>Profile</h1>
         <p>Username: {{ user.username }}</p>
         <p>Email: {{ user.email }}</p>
         <p>First Name: {{ user.first_name }}</p>
         <p>Last Name: {{ user.last_name }}</p>
         <p>ID: {{ user.id }}</p>
-        <p>Avatar: {{ user.socialaccount_set.all.0.get_avatar_url }}</p>
-
     </body>
 
 </html>

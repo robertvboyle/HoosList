@@ -1,10 +1,11 @@
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.template import loader
+from django.contrib.auth import logout
 
 import urllib, json
 
@@ -105,3 +106,7 @@ class ProfileView(generic.ListView):
 
     def get_queryset(self):
         return ''
+
+def logout_user(request):
+    logout(request)
+    return redirect("/")

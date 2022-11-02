@@ -16,6 +16,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('<str:department>', views.DepartmentView.as_view(), name='department'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('logout/', views.logout_user, name='logout'),
     #path('login', include('main.urls')),
 
 ]

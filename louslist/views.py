@@ -8,7 +8,7 @@ from django.template import loader
 
 import urllib, json
 
-from louslist.models import Course
+from louslist.models import Course, User
 
 
 class IndexView(generic.ListView):
@@ -110,8 +110,15 @@ class ProfileView(generic.ListView):
 
 def processClass(request):
     if(request.method == "POST"):
+        userid = request.POST.get('userid')
+        #user = User.objects.get(id=userid)
+
+        # When we make the user model, we will query the user by the context user id, then add the class to the user's list of classes
+
+
         form = Course()
         form.title = request.POST.get("title")
+        department = request.POST.get("department")
         form.subject = request.POST.get("subject")
         form.number = request.POST.get("number")
         form.section = request.POST.get("section")
@@ -120,7 +127,10 @@ def processClass(request):
         form.days = request.POST.get("days")
         form.time = request.POST.get("time")
         form.location = request.POST.get("location")
-        form.save()
-
-
-    return HttpResponseRedirect(reverse('louslist:index'))
+        form.course_id = request.POST.get("course_id")
+        try:
+            currCourse = Course.objects.get(course_id=form.course_id)
+        except Course.DoesNotExist:
+            form.save()
+    
+    return HttpResponseRedirect(reverse('louslist:department', kwargs={'department': department}))

@@ -109,11 +109,11 @@ DATABASES = {
 
 }
 
-# if True:
-#     DATABASES['default'] = {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'mydatabase'
-#     }
+if True:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase'
+    }
 
 
 # Password validation

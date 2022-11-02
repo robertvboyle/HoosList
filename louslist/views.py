@@ -127,10 +127,10 @@ def processClass(request):
         form.days = request.POST.get("days")
         form.time = request.POST.get("time")
         form.location = request.POST.get("location")
-        form.course_id = request.POST.get("course_id")
+        form.course_id = request.POST.get("course_id") # This is the course id that we will use to query the API for the course description
         try:
-            currCourse = Course.objects.get(course_id=form.course_id)
+            currCourse = Course.objects.get(course_id=form.course_id) # If the course already exists, we don't want to add it again
         except Course.DoesNotExist:
-            form.save()
+            form.save() # If the course doesn't exist, save it to the database
     
     return HttpResponseRedirect(reverse('louslist:department', kwargs={'department': department}))

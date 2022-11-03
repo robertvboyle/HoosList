@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
 
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'da6bt2ohqcu5li',
         'USER': 'lgiobgsmnnycmm',
         'PASSWORD': '5f6c4cce45852f4a694fdfa7d85677f6984e194346d4182e2872adf3191e70c9',
@@ -111,7 +111,7 @@ DATABASES = {
 
 }
 
-if 'test' in sys.argv or 'test' in sys.argv:
+if 'test' in sys.argv or 'test_coverage' in sys.argv:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'mydatabase'
@@ -141,7 +141,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
-SITE_ID = 2
+SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
@@ -178,7 +178,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

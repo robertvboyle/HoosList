@@ -42,16 +42,24 @@
 
 <html>
     <head>
-        <title>Profile</title>
+        <title>My Profile</title>
     </head>
     <body>
-        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="img">
-        <h1>Profile</h1>
-        <p>Username: {{ user.username }}</p>
-        <p>Email: {{ user.email }}</p>
-        <p>First Name: {{ user.first_name }}</p>
-        <p>Last Name: {{ user.last_name }}</p>
-        <p>ID: {{ user.id }}</p>
+      <div class="d-flex justify-content-center mt-4">
+        <div class="card " style="width: 18rem;">
+          <img class="card-img-top" src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Username: {{ user.username }}</li>
+            <li class="list-group-item">Email: {{ user.email }}</li>
+            <li class="list-group-item">ID: {{ user.id }}</li>
+          </ul>
+          <div class="card-body">
+            <a class="btn btn-primary " href="/logout/">Logout</a>
+          </div>
+        </div>
+      </div>
     </body>
-
 </html>

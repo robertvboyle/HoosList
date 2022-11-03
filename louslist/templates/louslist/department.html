@@ -1,4 +1,4 @@
-
+{% regroup data by description as newList %}
 <head>
   {% load static %}
   {% load bootstrap5 %}
@@ -7,35 +7,41 @@
   {% load socialaccount %}
   {% load lous_extra %}
 
+    <title>{{newList.0.list.0.subject}} Courses</title>
+
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 
 <body>
-  {% regroup data by description as newList %}
+  
   <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="/">UVA Courses</a>
-          <a class="navbar-brand">{{newList.0.list.0.subject}}</a>
+          <a class="navbar-brand" href="/{{newList.0.list.0.subject}}">{{newList.0.list.0.subject}}</a>
+        {% if user.is_authenticated %}
+        <a class="navbar-brand" href="/profile/">My Profile</a>
+        {% endif %}
       </div>
+
       <ul class="navbar-nav">
         <li class="nav-item">
           {% if user.is_authenticated %}
-          <a class="nav-link" href="{% provider_login_url 'google' %}">{{user.first_name}}</a>
+          <a class="nav-link " href="{% provider_login_url 'google' %}">Signed in as: {{user.first_name}}</a>
           {% else %}
           <a class ="nav-link" href="{% provider_login_url 'google' %}">Login</a>
+          {% endif %}
+        </li>
+        <li class="nav-item">
+          {% if user.is_authenticated %}
+          <a class="nav-link " href="/logout/">Logout</a>
           {% endif %}
         </li>
       </ul>
     </div>
   </nav>
-
-  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-    <img src="https://cdn0.iconfinder.com/data/icons/rounded-basics/24/rounded__menu-512.png" width="25">
-  </button>
-
 
 
   <ul class="d-flex justify-content-center list-group px-5" style="padding-bottom: 80px">
@@ -61,6 +67,9 @@
             <th  scope="col">Seats Available</th>
             <th  scope="col">Wait List</th>
             <th scope="col">Location</th>
+            {% if user.is_authenticated %}
+            <th scope="col">Add to Schedule</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
@@ -74,16 +83,38 @@
                   <br>
               {% endfor %}
             </td>
-            <td style="width:20%">{{y.instructor.name}}</td>
+            <td style="width:15%">{{y.instructor.name}}</td>
             <td style="width:10%">{{y.enrollment_available}} / {{y.class_capacity}}</td>
             <td style="width:10%">{{y.wait_list}} / {{y.wait_cap}}</td>
-            <td style="width:20%">
+            <td style="width:15%">
               {% for l in y.meetings %} 
                 {{l.facility_description}}
                   <br>
                   <br>
               {% endfor %}
               </td>
+              {% if user.is_authenticated %}
+              
+              <form action="/processClass/" method="post">
+                {% csrf_token %}
+                <input id="title" type="hidden" name="title" value="{{y.description}}">
+                <input id="subject" type="hidden" name="subject" value="{{y.subject}}">
+                <input id="number" type="hidden" name="number" value="{{y.catalog_number}}">
+                <input id="section" type="hidden" name="section" value="{{y.course_section}}">
+                <input id="credits" type="hidden" name="credits" value="{{y.units}}">
+                <input id="instructor" type="hidden" name="instructor" value="{{y.instructor.name}}">
+                <input id="days" type="hidden" name="days" value="{{y.meetings.0.days}}">
+                <input id="time" type="hidden" name="time" value="{{y.meetings.0.start_time}}">
+                <input id="location" type="hidden" name="location" value="{{y.meetings.0.facility_description}}">
+                <input id="department" type="hidden" name="department" value="{{newList.0.list.0.subject}}">
+                <input id="courseid" type="hidden" name="courseid" value="{{y.meetings.0.course_number}}">
+                <input id="userid" type="hidden" name="userid" value="{{user.id}}">
+                
+
+                <td style="width:10%"><input type="submit" value="Add"></td>
+            </form>
+              
+              {% endif %}
           </tr>
       
         {% endfor %}
@@ -95,22 +126,4 @@
   {% endfor %}
   </ul>
   
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div>
-        <p>We eventually need to dynamically create a logout or profile button depending on the login status</p>
-        <a class="mt-10 btn btn-primary wx-15" href="{% url 'louslist:login'%}">Log Out</a>
-      </div>
-        
-    </div>
-  </div>
-
-
-
 </body>
-
-

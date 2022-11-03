@@ -1,12 +1,15 @@
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.template import loader
+from django.contrib.auth import logout
 
 import urllib, json
+
+from louslist.models import Course, User
 
 
 class IndexView(generic.ListView):
@@ -105,3 +108,34 @@ class ProfileView(generic.ListView):
 
     def get_queryset(self):
         return ''
+
+def processClass(request):
+    if(request.method == "POST"):
+        userid = request.POST.get('userid')
+        #user = User.objects.get(id=userid)
+
+        # When we make the user model, we will query the user by the context user id, then add the class to the user's list of classes
+
+
+        form = Course()
+        form.title = request.POST.get("title") 
+        department = request.POST.get("department")
+        form.subject = request.POST.get("subject")
+        form.number = request.POST.get("number")
+        form.section = request.POST.get("section")
+        form.credits = request.POST.get("credits")
+        form.instructor = request.POST.get("instructor") 
+        form.days = request.POST.get("days")
+        form.time = request.POST.get("time")
+        form.location = request.POST.get("location") 
+        form.course_id = request.POST.get("course_id") 
+        try:
+            currCourse = Course.objects.get(course_id=form.course_id) # If the course already exists, we don't want to add it again
+        except Course.DoesNotExist:
+            form.save() # If the course doesn't exist, save it to the database
+    
+    return HttpResponseRedirect(reverse('louslist:department', kwargs={'department': department}))
+
+def logout_user(request):
+    logout(request)
+    return redirect("/")

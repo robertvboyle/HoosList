@@ -37,7 +37,7 @@ class Course(models.Model):
     location = models.CharField(max_length=200)
     course_id = models.IntegerField()
     def __str__(self):
-        return self.title
+        return self.subject + " " + str(self.number) + "Section: " + str(self.section)
 
 
 

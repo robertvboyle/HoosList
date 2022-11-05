@@ -8,13 +8,13 @@ from django.contrib import admin
 
 
 class User(models.Model):
-    username = models.CharField(max_length=20)
+    username = models.CharField(max_length=200)
     id_num = models.IntegerField()
     image = models.ImageField
-    email = models.CharField(max_length=30)
-    first_name = models.CharField(max_length=20)
+    email = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200)
     friends = models.ManyToManyField('self', blank=True)
-    last_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.username
@@ -26,17 +26,18 @@ class Schedule(models.Model):
         return self.user.username
 
 class Course(models.Model):
-    title = models.CharField(max_length=50)
-    subject = models.CharField(max_length=20)
+    title = models.CharField(max_length=200)
+    subject = models.CharField(max_length=200)
     number = models.IntegerField()
     section = models.IntegerField()
     credits = models.IntegerField()
-    instructor = models.CharField(max_length=20)
-    days = models.CharField(max_length=20)
-    time = models.CharField(max_length=20)
-    location = models.CharField(max_length=20)
+    instructor = models.CharField(max_length=200)
+    days = models.CharField(max_length=200)
+    time = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
+    course_id = models.IntegerField()
     def __str__(self):
-        return self.course_id
+        return self.subject + " " + str(self.number) + "Section: " + str(self.section)
 
 
 

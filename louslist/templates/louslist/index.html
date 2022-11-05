@@ -5,6 +5,7 @@
 {% load socialaccount %}
 
 <head>
+  <title>UVA Courses</title>
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -17,33 +18,26 @@
       <div class="navbar-header">
         <a class="navbar-brand" href="/">UVA Courses</a>
         <a class="navbar-brand">Departments</a>
+        {% if user.is_authenticated %}
+        <a class="navbar-brand" href="/profile/">My Profile</a>
+        {% endif %}
       </div>
       <ul class="navbar-nav">
         <li class="nav-item">
           {% if user.is_authenticated %}
-          <a class="nav-link " href="{% provider_login_url 'google' %}">{{user.first_name}}</a>
+          <a class="nav-link " href="{% provider_login_url 'google' %}">Signed in as: {{user.first_name}}</a>
           {% else %}
           <a class ="nav-link" href="{% provider_login_url 'google' %}">Login</a>
+          {% endif %}
+        </li>
+        <li class="nav-item">
+          {% if user.is_authenticated %}
+          <a class="nav-link " href="/logout/">Logout</a>
           {% endif %}
         </li>
       </ul>
     </div>
   </nav>
-
-
-  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-    <img src="https://cdn0.iconfinder.com/data/icons/rounded-basics/24/rounded__menu-512.png" width="25">
-  </button>
-
-
-
-  <!-- <li class="">
-    {% if user.is_authenticated %}
-    <a class="text-right font-italic" href="#">Signed in as {{user.first_name}}</a>
-    {% else %}
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
-    {% endif %}
-  </li> -->
 
 
   <div id="accordion" class="mx-3 my-2">
@@ -209,36 +203,4 @@
     </div>
   </div>
   
-  
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div>
-        <p>We eventually need to dynamically create a logout or profile button depending on the login status</p>
-        <a class="mt-10 btn btn-primary wx-15" href="{% url 'louslist:login'%}">Log Out</a>
-      </div>
-        
-    </div>
-  </div>
-
-  {% load socialaccount %}
-<html>
-
-<head>
-    <title>Google Registration</title>
-</head>
-
-<body>
-    
-
 </body>
-
-</html>
-
-
-</body>
-
-

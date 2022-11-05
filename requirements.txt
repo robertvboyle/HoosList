@@ -14,5 +14,5 @@ django-bootstrap-v5
 
 whitenoise
 
-
+django-allauth
 psycopg2-binary

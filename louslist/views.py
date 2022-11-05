@@ -9,7 +9,7 @@ from django.contrib.auth import logout
 
 import urllib, json
 
-from louslist.models import Course, User
+from louslist.models import Course, Schedule, User
 
 
 class IndexView(generic.ListView):
@@ -109,13 +109,22 @@ class ProfileView(generic.ListView):
     def get_queryset(self):
         return ''
 
+def ScheduleView(request):
+    try:
+        courses = Schedule.objects.get(userID=request.user.id).courses.all()
+    except:
+        s = Schedule(userID=request.user.id)
+        s.save()
+        courses = s.courses.all()
+    context = {'courses': courses}
+    return render(request, 'louslist/schedule.html', context)
+
 def processClass(request):
     if(request.method == "POST"):
         userid = request.POST.get('userid')
         #user = User.objects.get(id=userid)
 
         # When we make the user model, we will query the user by the context user id, then add the class to the user's list of classes
-
 
         form = Course()
         form.title = request.POST.get("title") 
@@ -129,10 +138,18 @@ def processClass(request):
         form.time = request.POST.get("time")
         form.location = request.POST.get("location") 
         form.course_id = request.POST.get("courseid")
+
+        form.save()
         try:
-            currCourse = Course.objects.get(course_id=form.course_id) # If the course already exists, we don't want to add it again
+            schedule = Schedule.objects.get(userID=userid) # If the course already exists, we don't want to add it again
+            schedule.save()
+            schedule.courses.add(form)
+            
         except:
-            form.save() # If the course doesn't exist, save it to the database
+            schedule = Schedule(userID=userid)
+            schedule.save()
+            schedule.courses.add(form)
+             # If the course doesn't exist, save it to the database
     
     return HttpResponseRedirect(reverse('louslist:department', kwargs={'department': department}))
 

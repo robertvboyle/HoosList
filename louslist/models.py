@@ -20,10 +20,10 @@ class User(models.Model):
         return self.username
 
 class Schedule(models.Model):
-    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    userID = models.CharField(max_length=200)
     courses = models.ManyToManyField('Course', blank=True)
     def __str__(self):
-        return self.user.username
+        return self.userID
 
 class Course(models.Model):
     title = models.CharField(max_length=200)

@@ -18,6 +18,7 @@ urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('processClass/', views.processClass, name="processClass"),
     path('logout/', views.logout_user, name='logout'),
+    path('schedule/', views.ScheduleView, name='schedule')
     #path('login', include('main.urls')),
 
 ]

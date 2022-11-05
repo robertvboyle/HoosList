@@ -109,6 +109,11 @@ class ProfileView(generic.ListView):
     def get_queryset(self):
         return ''
 
+def ScheduleView(request):
+    courses = Course.objects.all()
+    context = {'courses': courses}
+    return render(request, 'louslist/schedule.html', context)
+
 def processClass(request):
     if(request.method == "POST"):
         userid = request.POST.get('userid')

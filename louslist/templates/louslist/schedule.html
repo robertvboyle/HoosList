@@ -3,6 +3,7 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% load socialaccount %}
+{% load lous_extra %}
 
 <head>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -43,20 +44,17 @@
 
 <html>
   <ul class="d-flex justify-content-center list-group px-5" style="padding-bottom: 80px">
-    {% for course in courses %}
+  
     <div class="d-flex justify-content-between">
-      <h4 class="pb-1 pt-4">{{course.subject}} {{course.number}}  {{courese.title}}</h2>
-      <div class="link-primary pb-1 pt-4">
-        <a  href="https://thecourseforum.com/course/{{x.list.0.subject}}/{{x.list.0.catalog_number}}/" target="_blank"><img src="https://thecourseforum.com/static/base/img/new_logo.png" width="40" height="40"></a>
-        <a  href="https://vagrades.com/uva/{{x.list.0.subject}}{{x.list.0.catalog_number}}/" target="_blank"><img src="https://vagrades.com/static/media/logo.05faa865.svg" width="40" height="40"></a>
-      </div>
-      
+      <h4 class="pb-1 pt-4">Courses</h2>
+     
     </div>
 
     <li class="list-group-item">
       <table class="table table-striped">
         <thead>
           <tr>
+            <th scope="col">Course</th>
             <th scope="col">Type</th>
             <th scope="col">Time</th>
             <th scope="col">Instructor</th>
@@ -64,17 +62,20 @@
           </tr>
         </thead>
         <tbody>
+          {% for course in courses %}
           <tr>
+            <td style="width:25%">{{course.subject}} {{course.number}} - {{course.title}}</td>
             <td style="width:15%">{{ course.credits }} Credits</td>
             <td style="width:25%">
-              {{ course.time }}
+              {{course.days}} {{ course.time }}
             </td>
             <td style="width:15%">{{course.instructor}}</td>
             <td style="width:15%">{{course.location}}</td>
           </tr>
+          {% endfor %}
         </tbody>
       </table>
     </li>
-    {% endfor %}
+    
   </ul>
 </html>

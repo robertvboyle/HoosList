@@ -139,7 +139,10 @@ def processClass(request):
         form.location = request.POST.get("location") 
         form.course_id = request.POST.get("courseid")
 
-        form.save()
+        try:
+            form = Course.objects.get(course_id=form.course_id)
+        except:
+            form.save()
         try:
             schedule = Schedule.objects.get(userID=userid) # If the course already exists, we don't want to add it again
             schedule.save()

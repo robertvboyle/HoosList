@@ -7,7 +7,7 @@ register = template.Library()
 @register.filter(name='convertTime')
 @stringfilter
 def convertTime(value):
-    if value != "":
+    if value != ("{"+"{"+"y:meetings}") and value != "":
         arr = value.split(".")
         firstTime = arr[0]+":"+arr[1]
         firstTime = datetime.strptime(firstTime, "%H:%M")

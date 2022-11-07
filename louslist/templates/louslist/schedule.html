@@ -71,6 +71,13 @@
             </td>
             <td style="width:15%">{{course.instructor}}</td>
             <td style="width:15%">{{course.location}}</td>
+            <form action="/schedule/" method="post">
+              {% csrf_token %}
+              <input id="courseid" type="hidden" name="courseid" value="{{course.course_id}}">
+              <input id="userid" type="hidden" name="userid" value="{{user.id}}">
+  
+              <td style="width:10%"><input type="submit" value="Remove" ></td>
+            </form>
           </tr>
           {% endfor %}
         </tbody>

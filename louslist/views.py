@@ -110,6 +110,13 @@ class ProfileView(generic.ListView):
         return ''
 
 def ScheduleView(request):
+    if(request.method == "POST"):
+        userid = request.POST.get('userid')
+        courseid = request.POST.get('courseid')
+        course = Course.objects.get(course_id=courseid)
+        s = Schedule.objects.get(userID=userid)
+        s.courses.remove(course)
+        s.save()
     try:
         courses = Schedule.objects.get(userID=request.user.id).courses.all()
     except:

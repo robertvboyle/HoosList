@@ -56,6 +56,7 @@
           <tr>
             <th scope="col">Course</th>
             <th scope="col">Type</th>
+            <th scope="col">Days</th>
             <th scope="col">Time</th>
             <th scope="col">Instructor</th>
             <th scope="col">Location</th>
@@ -65,9 +66,19 @@
           {% for course in courses %}
           <tr>
             <td style="width:25%">{{course.subject}} {{course.number}} - {{course.title}}</td>
-            <td style="width:15%">{{ course.credits }} Credits</td>
-            <td style="width:25%">
-              {{course.days}} {{ course.time }}
+            <td style="width:10%">{{ course.credits }} Credits</td> 
+            <td style="width:10%">{% for sp in course.days|splitDays %}
+              {{sp}}
+              <br>
+              <br>
+              {% endfor %}
+            </td>
+            <td style="width:20%">
+              {% for sp in course.time|splitTimes %}
+              {{sp}}
+              <br>
+              <br>
+              {% endfor %}
             </td>
             <td style="width:15%">{{course.instructor}}</td>
             <td style="width:15%">{{course.location}}</td>

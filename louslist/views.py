@@ -139,7 +139,10 @@ def processClass(request):
         form.subject = request.POST.get("subject")
         form.number = request.POST.get("number")
         form.section = request.POST.get("section")
-        form.credits = request.POST.get("credits")
+        if "-" in str(request.POST.get("credits")):
+            form.credits = int(str(request.POST.get("credits"))[0])
+        else:
+            form.credits = request.POST.get("credits")
         form.instructor = request.POST.get("instructor") 
         form.days = request.POST.get("days")
         form.time = request.POST.get("time")
@@ -154,6 +157,7 @@ def processClass(request):
             schedule = Schedule.objects.get(userID=userid) # If the course already exists, we don't want to add it again
             schedule.save()
             schedule.courses.add(form)
+            print(schedule.courses.all())
             
         except:
             schedule = Schedule(userID=userid)

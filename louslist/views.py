@@ -1,4 +1,5 @@
- 
+
+import datetime
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -9,7 +10,7 @@ from django.contrib.auth import logout
 
 import urllib, json
 
-from .models import Course, User, Profile
+from .models import Course, Schedule, User, Profile
 
 
 class IndexView(generic.ListView):
@@ -114,13 +115,29 @@ class ProfileView(generic.ListView):
     def get_queryset(self):
         return ''
 
-def processClass(request):
+def ScheduleView(request):
     if(request.method == "POST"):
         userid = request.POST.get('userid')
+        courseid = request.POST.get('courseid')
+        course = Course.objects.get(course_id=courseid)
+        s = Schedule.objects.get(userID=userid)
+        s.courses.remove(course)
+        s.save()
+    try:
+        courses = Schedule.objects.get(userID=request.user.id).courses.all()
+    except:
+        s = Schedule(userID=request.user.id)
+        s.save()
+        courses = s.courses.all()
+    context = {'courses': courses}
+    return render(request, 'louslist/schedule.html', context)
+
+def processClass(request):
+    if(request.method == "POST"):
+
         #user = User.objects.get(id=userid)
 
         # When we make the user model, we will query the user by the context user id, then add the class to the user's list of classes
-
 
         form = Course()
         form.title = request.POST.get("title") 
@@ -128,17 +145,64 @@ def processClass(request):
         form.subject = request.POST.get("subject")
         form.number = request.POST.get("number")
         form.section = request.POST.get("section")
-        form.credits = request.POST.get("credits")
+        if "-" in str(request.POST.get("credits")):
+            form.credits = int(str(request.POST.get("credits"))[0])
+        else:
+            form.credits = request.POST.get("credits")
         form.instructor = request.POST.get("instructor") 
         form.days = request.POST.get("days")
         form.time = request.POST.get("time")
         form.location = request.POST.get("location") 
-        form.course_id = request.POST.get("course_id") 
+        form.course_id = request.POST.get("courseid")
+
         try:
-            currCourse = Course.objects.get(course_id=form.course_id) # If the course already exists, we don't want to add it again
-        except Course.DoesNotExist:
-            form.save() # If the course doesn't exist, save it to the database
-    
+            form = Course.objects.get(course_id=form.course_id)
+        except:
+            form.save()
+        
+        # arrayTimes = []
+        # if form.time != "-" or form.time != "":
+        #     timeSplit = form.time.split("  ")
+        #     for i in timeSplit:
+        #         if i !="":
+        #             timesSecond = i.split(" - ")
+        #             firstTime = datetime.datetime.strptime(timesSecond[0], "%I:%M %p")
+        #             secondTime = datetime.datetime.strptime(timesSecond[1], "%I:%M %p")
+        #             arrayTimes.append([firstTime,secondTime])
+
+        # times = []
+        # if form.days != "-" or form.days != "":
+        #     daysSplit = form.days.split(" ")
+        #     for day in range(len(daysSplit)):
+        #         for oneDay in range(0,len(daysSplit[day]),2):
+        #             curDay = daysSplit[day][oneDay:oneDay+2]
+                    
+        #             if curDay == "Mo":
+        #                 times.append([arrayTimes[day][0].replace(day=2),arrayTimes[day][1].replace(day=2)])
+        #             elif curDay == "Tu":
+        #                 times.append([arrayTimes[day][0].replace(day=3),arrayTimes[day][1].replace(day=3)])
+        #             elif curDay == "We":
+        #                 times.append([arrayTimes[day][0].replace(day=4),arrayTimes[day][1].replace(day=4)])
+        #             elif curDay == "Th":
+        #                 times.append([arrayTimes[day][0].replace(day=5),arrayTimes[day][1].replace(day=5)])
+        #             elif curDay == "Fr":
+        #                 times.append([arrayTimes[day][0].replace(day=6),arrayTimes[day][1].replace(day=6)])
+        #             elif curDay == "Sa":
+        #                 times.append([arrayTimes[day][0].replace(day=7),arrayTimes[day][1].replace(day=7)])
+        #             else:
+        #                 times.append([arrayTimes[day][0].replace(day=1),arrayTimes[day][1].replace(day=1)])   
+                        
+      
+        try:
+            schedule = Schedule.objects.get(userID= userForm.id_num) # If the course already exists, we don't want to add it again
+            schedule.save()
+            schedule.courses.add(form)    
+        except:
+            schedule = Schedule(userID= userForm.id_num)
+            schedule.save()
+            schedule.courses.add(form)
+            # If the course doesn't exist, save it to the database
+        
     return HttpResponseRedirect(reverse('louslist:department', kwargs={'department': department}))
 
 def logout_user(request):

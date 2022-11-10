@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 
 
+from django.contrib.postgres.fields import ArrayField
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -50,10 +51,10 @@ class Relationship(models.Model):
 
 
 class Schedule(models.Model):
-    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    userID = models.CharField(max_length=200)
     courses = models.ManyToManyField('Course', blank=True)
     def __str__(self):
-        return self.user.username
+        return self.userID
 
 class Course(models.Model):
     title = models.CharField(max_length=50)
@@ -66,7 +67,7 @@ class Course(models.Model):
     time = models.CharField(max_length=20)
     location = models.CharField(max_length=20)
     def __str__(self):
-        return self.course_id
+        return self.subject + " " + str(self.number) + "Section: " + str(self.section)
 
 
 

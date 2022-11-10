@@ -3,14 +3,11 @@ import datetime
 from django.db import models
 from django.utils import timezone
 from django.contrib import admin
-
-
-
+from django.contrib.postgres.fields import ArrayField
 
 class User(models.Model):
     username = models.CharField(max_length=200)
     id_num = models.IntegerField()
-    image = models.ImageField
     email = models.CharField(max_length=200)
     first_name = models.CharField(max_length=200)
     friends = models.ManyToManyField('self', blank=True)

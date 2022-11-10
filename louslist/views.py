@@ -1,4 +1,4 @@
-
+ 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -9,7 +9,7 @@ from django.contrib.auth import logout
 
 import urllib, json
 
-from louslist.models import Course, User
+from .models import Course, User, Profile
 
 
 class IndexView(generic.ListView):
@@ -94,7 +94,12 @@ class DepartmentView(generic.ListView):
         return ''
 
 
+def my_profile(request):
+    profile = Profile.objects.get(user=request.user)
 
+    context = {'profile':profile}
+
+    return render(request, 'louslist/myprofile.html', context)
     
 
 class LoginView(generic.ListView):

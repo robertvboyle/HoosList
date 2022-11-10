@@ -10,7 +10,7 @@ from django.contrib.auth import logout
 
 import urllib, json
 
-from louslist.models import Course, Schedule, User
+from .models import Course, Schedule, User, Profile
 
 
 class IndexView(generic.ListView):
@@ -95,7 +95,12 @@ class DepartmentView(generic.ListView):
         return ''
 
 
+def my_profile(request):
+    profile = Profile.objects.get(user=request.user)
 
+    context = {'profile':profile}
+
+    return render(request, 'louslist/myprofile.html', context)
     
 
 class LoginView(generic.ListView):
@@ -129,18 +134,6 @@ def ScheduleView(request):
 
 def processClass(request):
     if(request.method == "POST"):
-        
-        userForm = User()
-        userForm.id_num = request.POST.get('userid')
-        userForm.first_name = request.POST.get('firstName')
-        userForm.last_name = request.POST.get('lastName')
-        userForm.username = request.POST.get('username')
-        userForm.email = request.POST.get('email')
-        
-        try:
-            userForm = User.objects.get(id_num=userForm.id_num)
-        except:
-            userForm.save()
 
         #user = User.objects.get(id=userid)
 

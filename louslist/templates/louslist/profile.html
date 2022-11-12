@@ -56,6 +56,32 @@
             <li class="list-group-item">Username: {{ user.username }}</li>
             <li class="list-group-item">Email: {{ user.email }}</li>
             <li class="list-group-item">ID: {{ user.id }}</li>
+
+            
+              
+            <div id="accordion" class="mx-3 my-2">
+              <div class="card">
+                <div class="card-header justify-content-center" id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      My Friends
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="container">
+                      <div class="row">
+                        {% for friend in user.profile.get_friends %}    
+                        <div class="button"><a href="/profiles/{{friend.id}}" class="list-group-item list-group-item-action">{{friend.first_name }} {{friend.last_name}}</a></div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+            </div>
           </ul>
           <div class="card-body">
             <a class="btn btn-primary " href="/logout/">Logout</a>

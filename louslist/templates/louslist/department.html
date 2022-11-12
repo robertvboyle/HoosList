@@ -98,19 +98,20 @@
               
               <form action="/processClass/" method="post">
                 {% csrf_token %}
+                <input id="userid" type="hidden" name="userid" value="{{user.id}}">
+                
                 <input id="title" type="hidden" name="title" value="{{y.description}}">
                 <input id="subject" type="hidden" name="subject" value="{{y.subject}}">
                 <input id="number" type="hidden" name="number" value="{{y.catalog_number}}">
                 <input id="section" type="hidden" name="section" value="{{y.course_section}}">
                 <input id="credits" type="hidden" name="credits" value="{{y.units}}">
                 <input id="instructor" type="hidden" name="instructor" value="{{y.instructor.name}}">
-                <input id="days" type="hidden" name="days" value="{{y.meetings.0.days}}">
-                <input id="time" type="hidden" name="time" value="{{y.meetings.0.start_time|convertTime}} - {{y.meetings.0.end_time|convertTime}}">
+                <input id="days" type="hidden" name="days" value="{% for l in y.meetings %}{{l.days}} {% endfor %}">
+                <input id="time" type="hidden" name="time" value="{% for l in y.meetings %}{{l.start_time|convertTime}} - {{l.end_time|convertTime}}  {% endfor %}">
                 <input id="location" type="hidden" name="location" value="{{y.meetings.0.facility_description}}">
                 <input id="department" type="hidden" name="department" value="{{newList.0.list.0.subject}}">
                 <input id="courseid" type="hidden" name="courseid" value="{{y.course_number}}">
-                <input id="userid" type="hidden" name="userid" value="{{user.id}}">
-    
+                
                 <td style="width:10%"><input type="submit" value="Add"></td>
               </form>
               

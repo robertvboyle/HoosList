@@ -1,6 +1,9 @@
 from django.contrib import admin
 
+
 from .models import User, Course, Profile
+
+
 
 
 class CourseAdmin(admin.ModelAdmin):

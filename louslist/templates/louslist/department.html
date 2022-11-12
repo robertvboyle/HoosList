@@ -99,7 +99,11 @@
               <form action="/processClass/" method="post">
                 {% csrf_token %}
                 <input id="userid" type="hidden" name="userid" value="{{user.id}}">
-                
+                <input id="firstName" type="hidden" name="firstName" value="{{ user.first_name }}">
+                <input id="lastName" type="hidden" name="lastName" value="{{ user.last_name }}">
+                <input id="username" type="hidden" name="username" value="{{ user.username }}">
+                <input id="email" type="hidden" name="email" value="{{ user.email }}">
+
                 <input id="title" type="hidden" name="title" value="{{y.description}}">
                 <input id="subject" type="hidden" name="subject" value="{{y.subject}}">
                 <input id="number" type="hidden" name="number" value="{{y.catalog_number}}">

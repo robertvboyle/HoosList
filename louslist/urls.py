@@ -2,6 +2,8 @@ from django.urls import path, include
 from django.contrib import admin
 
 from . import views
+from .views import my_profile
+
 
 app_name = 'louslist'
 urlpatterns = [
@@ -16,6 +18,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('<str:department>', views.DepartmentView.as_view(), name='department'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('myprofile/', my_profile, name='my-profile-view'),
     path('processClass/', views.processClass, name="processClass"),
     path('logout/', views.logout_user, name='logout'),
     path('schedule/', views.ScheduleView, name='schedule')

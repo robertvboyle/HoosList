@@ -138,7 +138,7 @@ def processClass(request):
         #user = User.objects.get(id=userid)
 
         # When we make the user model, we will query the user by the context user id, then add the class to the user's list of classes
-
+        userid = request.POST.get('userid')
         form = Course()
         form.title = request.POST.get("title") 
         department = request.POST.get("department")
@@ -194,11 +194,11 @@ def processClass(request):
                         
       
         try:
-            schedule = Schedule.objects.get(userID= userForm.id_num) # If the course already exists, we don't want to add it again
+            schedule = Schedule.objects.get(userID= userid) # If the course already exists, we don't want to add it again
             schedule.save()
             schedule.courses.add(form)    
         except:
-            schedule = Schedule(userID= userForm.id_num)
+            schedule = Schedule(userID= userid)
             schedule.save()
             schedule.courses.add(form)
             # If the course doesn't exist, save it to the database

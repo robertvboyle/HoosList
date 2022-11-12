@@ -57,15 +57,16 @@ class Schedule(models.Model):
         return self.userID
 
 class Course(models.Model):
-    title = models.CharField(max_length=50)
-    subject = models.CharField(max_length=20)
+    title = models.CharField(max_length=200)
+    subject = models.CharField(max_length=200)
+    course_id = models.CharField(max_length=200)
     number = models.IntegerField()
     section = models.IntegerField()
     credits = models.IntegerField()
-    instructor = models.CharField(max_length=20)
-    days = models.CharField(max_length=20)
-    time = models.CharField(max_length=20)
-    location = models.CharField(max_length=20)
+    instructor = models.CharField(max_length=200)
+    days = models.CharField(max_length=200)
+    time = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
     def __str__(self):
         return self.subject + " " + str(self.number) + "Section: " + str(self.section)
 

@@ -54,7 +54,7 @@ all profiles
                     <div class = "thirteen wide column">
                         <h3>{{obj.user}}</h3>
                         <p>{{obj.bio}}</p>
-                        <button type="button" class="btn btn-secondary">See Profile</button>
+                        <a href="/profiles/{{obj.user.id}}" class="btn btn-secondary">See Profile</a>
                     </div>
 
                     {% if obj.user not in rel_receiver and obj.user not in rel_sender %}

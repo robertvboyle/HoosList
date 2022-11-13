@@ -338,3 +338,35 @@ def remove_from_friends(request):
 
     return redirect("/")
 
+class DepartmentView(generic.ListView):
+    template_name = 'louslist/department.html'
+
+    def get_context_data(self, **kwargs):
+        dept = self.kwargs.get('department')
+        context = super(DepartmentView, self).get_context_data(**kwargs)
+        url = "http://luthers-list.herokuapp.com/api/dept/%s/?format=json" % (dept)
+        response = urllib.request.urlopen(url)
+        data = json.loads(response.read())
+
+
+        context= {
+            'data' : data,
+        }
+
+        return context
+
+    def get_queryset(self):
+        return ''
+
+def profilesView(request, userid):
+    user = request.user
+    user2 = User.objects.get(id=userid)
+    if user == user2:
+        return redirect('louslist:profile')
+    else:
+        
+        context = {'user2': user2}
+        return render(request, 'louslist/profiles.html', context)
+
+    
+

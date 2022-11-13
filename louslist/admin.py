@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 
-from .models import User, Course, Profile, Schedule
+from .models import User, Course, Profile, Schedule, Relationship
 
 
 
@@ -17,3 +17,5 @@ admin.site.register(Course, CourseAdmin)
 admin.site.register(Profile, ProfileAdmin)
 
 admin.site.register(Schedule)
+
+admin.site.register(Relationship)

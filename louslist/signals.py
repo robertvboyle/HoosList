@@ -29,3 +29,6 @@ def pre_delete_remove_from_friends(sender, instance, **kwargs):
     receiver.save()
 
 
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()

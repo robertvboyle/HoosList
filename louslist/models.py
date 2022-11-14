@@ -125,3 +125,8 @@ class Course(models.Model):
 #     seatsOpen = models.IntegerField(max_length=3)
 
 
+class Comment(models.Model):
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="comments")
+    name = models.CharField(max_length=200)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)

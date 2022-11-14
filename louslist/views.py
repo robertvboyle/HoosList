@@ -194,6 +194,7 @@ def processClass(request):
 
         # When we make the user model, we will query the user by the context user id, then add the class to the user's list of classes
         userid = request.POST.get('userid')
+        next = request.POST.get("next")
         form = Course()
         form.title = request.POST.get("title") 
         department = request.POST.get("department")
@@ -258,7 +259,7 @@ def processClass(request):
             schedule.courses.add(form)
             # If the course doesn't exist, save it to the database
         
-    return HttpResponseRedirect(reverse('louslist:department', kwargs={'department': department}))
+    return HttpResponseRedirect(next)
 
 def logout_user(request):
     logout(request)
@@ -411,3 +412,14 @@ def addComment(request):
         next = request.POST.get("next")
         comment.save()
     return HttpResponseRedirect(next)
+
+def searchView(request):
+    if(request.method == "POST"):
+        searched = request.POST.get('searched')
+        courses = Course.objects.filter(title__icontains = searched)
+        courses |= Course.objects.filter(subject__icontains = searched)
+        courses |= Course.objects.filter(instructor__icontains = searched)
+        context = {'courses': courses, 'searched': searched}
+        return render(request, 'louslist/search.html', context)
+    else:
+        return render(request, 'louslist/search.html')

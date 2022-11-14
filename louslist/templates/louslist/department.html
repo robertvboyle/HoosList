@@ -117,6 +117,7 @@
                 <input id="department" type="hidden" name="department" value="{{newList.0.list.0.subject}}">
                 <input id="courseid" type="hidden" name="courseid" value="{{y.course_number}}">
                 <input id="userid" type="hidden" name="userid" value="{{user.id}}">
+                <input type="hidden" name="next" value="{{ request.path }}">
                 
                 <td style="width:10%"><input class="btn btn-outline-success" type="submit" value="Add"></td>
               </form>

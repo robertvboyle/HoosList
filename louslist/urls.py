@@ -32,5 +32,6 @@ urlpatterns = [
     path('schedules/<str:userid>', views.schedulesView, name='schedules'),
     #path('login', include('main.urls')),
     path('addComment/', views.addComment, name="addComment"),
+    path('search/', views.searchView, name='search'),
 
 ]

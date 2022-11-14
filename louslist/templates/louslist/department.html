@@ -7,38 +7,42 @@
   {% load socialaccount %}
   {% load lous_extra %}
 
-    <title>{{newList.0.list.0.subject}} Courses</title>
+    <title>{{newList.0.list.0.subject}} - UVA Courses</title>
 
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</head>
+   </head>
 
 <body>
-  
   <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
     <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">UVA Courses</a>
-        <a class="navbar-brand">Departments</a>
-        {% if user.is_authenticated %}
-        <a class="navbar-brand" href="/profile/">My Profile</a>
-        <a class="navbar-brand" href="/schedule/">My Schedule</a>
-        <a class="navbar-brand" href="/all-profiles/">All Profiles</a>
-        <a class="navbar-brand" href="/my-invites/">My Invites</a>
-        {% endif %}
-      </div>
       <ul class="navbar-nav">
+        <a class="navbar-brand" href="/">UVA Courses</a>
+        {% if user.is_authenticated %}
         <li class="nav-item">
-          {% if user.is_authenticated %}
-          <a class="nav-link " href="{% provider_login_url 'google' %}">Signed in as: {{user.first_name}}</a>
-          {% else %}
-          <a class ="nav-link" href="{% provider_login_url 'google' %}">Login</a>
-          {% endif %}
+          <a class="nav-link" href="/">Departments</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link " href="/schedule/">My Schedule</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/all-profiles/">Find Friends</a>
+        </li>
+        {% endif %}
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
           {% if user.is_authenticated %}
-          <a class="nav-link " href="/logout/">Logout</a>
+            <a class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{user.first_name}}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/profile/">My Profile</a></li>
+              <li><a class="dropdown-item" href="/my-invites/">Friend Requests</a></li>
+              <li><a class="dropdown-item" href="/logout/">Log out</a>
+            </ul>
+          </li>
+          <li class="nav-item mx-5">  </li>
+          {% else %}
+          <a class ="nav-link" href="{% provider_login_url 'google' %}">Login</a>
           {% endif %}
         </li>
       </ul>
@@ -78,7 +82,7 @@
         {% for y in x.list|sortMeeting %}     
           <tr>
             <td style="width:15%">{{y.component}} - {{y.units}} Credits</td>
-            <td style="width:25%">
+            <td style="width:20%">
               {% for l in y.meetings %} 
                   {{l.days}} {{l.start_time|convertTime }} - {{l.end_time|convertTime}}
                   <br>
@@ -88,7 +92,7 @@
             <td style="width:15%">{{y.instructor.name}}</td>
             <td style="width:10%">{{y.enrollment_available}} / {{y.class_capacity}}</td>
             <td style="width:10%">{{y.wait_list}} / {{y.wait_cap}}</td>
-            <td style="width:15%">
+            <td style="width:20%">
               {% for l in y.meetings %} 
                 {{l.facility_description}}
                   <br>
@@ -114,7 +118,7 @@
                 <input id="courseid" type="hidden" name="courseid" value="{{y.course_number}}">
                 <input id="userid" type="hidden" name="userid" value="{{user.id}}">
                 
-                <td style="width:10%"><input type="submit" value="Add"></td>
+                <td style="width:10%"><input class="btn btn-outline-success" type="submit" value="Add"></td>
               </form>
               
               {% endif %}

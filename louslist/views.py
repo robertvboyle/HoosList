@@ -368,5 +368,33 @@ def profilesView(request, userid):
         context = {'user2': user2}
         return render(request, 'louslist/profiles.html', context)
 
+
+def schedulesView(request, userid):
+    if(request.method == "POST"):
+        user2id = request.POST.get('userid')
+        courseid = request.POST.get('courseid')
+        course = Course.objects.get(course_id=courseid)
+        s = Schedule.objects.get(userID=user2id)
+        s.courses.add(course)
+        s.save()
+
+    areFriends = False
+    user = request.user
+    user2 = User.objects.get(id=userid)
+
+    if user2 in user.profile.friends.all():
+        areFriends = True
+    print(areFriends)
+    if user == user2:
+        return redirect('louslist:schedule')
+    try:
+        courses = Schedule.objects.get(userID=userid).courses.all()
+    except:
+        s = Schedule(userID=userid)
+        s.save()
+        courses = s.courses.all()
+    context = {'courses': courses, 'user2': user2, 'friends': areFriends}
+    return render(request, 'louslist/friendschedules.html', context)
+
     
 

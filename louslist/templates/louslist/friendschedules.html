@@ -43,16 +43,9 @@
 <html>
     
 
-  <ul class="d-flex justify-content-center list-group px-5" style="padding-bottom: 80px">
+  <ul class="d-flex justify-content-center list-group px-5 py-5" style="padding-bottom: 80px">
     {% if not friends %}
-    <p>You are not friends with {{user2.first_name}} {{user2.last_name}}</p>
-        {% if obj.user not in rel_receiver and obj.user not in rel_sender %}
-        <form action='/send_invite/' method="POST">
-            {% csrf_token %}  
-            <button type="submit" class="btn btn-success">Add To Friends</button>
-            
-        </form>
-        {% endif %}
+    <h1>You are not friends with {{user2.first_name}} {{user2.last_name}}</h1>
     {% endif %}
     {% if friends %}
 

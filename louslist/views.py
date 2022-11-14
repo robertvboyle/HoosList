@@ -384,7 +384,7 @@ def schedulesView(request, userid):
 
     if user2 in user.profile.friends.all():
         areFriends = True
-    print(areFriends)
+    
     if user == user2:
         return redirect('louslist:schedule')
     try:

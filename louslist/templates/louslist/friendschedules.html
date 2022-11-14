@@ -88,7 +88,7 @@
               {% csrf_token %}
               <input id="courseid" type="hidden" name="courseid" value="{{course.course_id}}">
               <input id="userid" type="hidden" name="userid" value="{{user.id}}">
-              <td style="width:10%"><input type="submit" value="Add To Schedule"></td>
+              <td style="width:10%"><input class="btn btn-outline-primary" type="submit" value="Add To Schedule"></td>
             </form>
           </tr>
           {% endfor %}

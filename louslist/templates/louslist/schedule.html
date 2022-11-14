@@ -65,7 +65,7 @@
               <br>
               {% endfor %}
             </td>
-            <td style="width:20%">
+            <td style="width:18%">
               {% for sp in course.time|splitTimes %}
               {{sp}}
               <br>
@@ -79,7 +79,7 @@
               <input id="courseid" type="hidden" name="courseid" value="{{course.course_id}}">
               <input id="userid" type="hidden" name="userid" value="{{user.id}}">
   
-              <td style="width:10%"><input type="submit" value="Remove"></td>
+              <td style="width:7%"><input class="btn btn-outline-danger" type="submit" value="Remove"></td>
             </form>
           </tr>
           {% endfor %}

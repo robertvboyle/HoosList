@@ -45,39 +45,39 @@
 
 <html>
     <head>
-        <title>My Profile</title>
+        <title>{{user2.first_name}}'s Profile</title>
     </head>
     <body>
       <div class="container">
         <div class="d-flex justify-content-center mt-4">
           <div class="card " style="width: 18rem;">
-            <img class="card-img-top" src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
+            <img class="card-img-top" src="{{ user2.socialaccount_set.all.0.get_avatar_url }}">
             <div class="card-body">
-              <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+              <h5 class="card-title">{{ user2.first_name }} {{ user2.last_name }}</h5>
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Username: {{ user.username }}</li>
-              <li class="list-group-item">Email: {{ user.email }}</li>
-              <li class="list-group-item">ID: {{ user.id }}</li>
+              <li class="list-group-item">Username: {{ user2.username }}</li>
+              <li class="list-group-item">Email: {{ user2.email }}</li>
+              <li class="list-group-item">ID: {{ user2.id }}</li>
               <div id="accordion" class="mx-3 my-2">
                 <div class="card">
                   <div class="card-header justify-content-center" id="headingOne">
                     <h5 class="mb-0">
-                        <button class="btn justify-content-between text-success" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                          My Friends
-                        </button>
+                      <button class="btn justify-content-between text-success" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        {{user2.first_name}}'s Friends
+                      </button>
                     </h5>
                   </div>
                   <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                       <div class="container">
                         <div class="row">
-                          {% if user.profile.get_friends %}
-                          {% for friend in user.profile.get_friends %}    
+                          {% if user2.profile.get_friends %}
+                          {% for friend in user2.profile.get_friends %}    
                           <div class="button"><a href="/profiles/{{friend.id}}" class="list-group-item list-group-item-action">{{friend.first_name }} {{friend.last_name}}</a></div>
                           {% endfor %}
                           {% else %}
-                          <p>You have no friends.</p>
+                          <p>{{user2.first_name}} has no friends.</p>
                           {% endif %}
                         </div>
                       </div>
@@ -86,17 +86,13 @@
                 </div>
               
               </div>
+              <li class="list-group-item justify-content-center"><a class=" button" href="/schedules/{{user2.id}}">{{user2.first_name}}'s Schedule</a></li>
+              
             </ul>
-            <div class="card-body">
-              <a class="btn btn-primary " href="/logout/">Logout</a>
-            </div>
           </div>
         </div>
       </div>
       
-
-            
-              
             
           
     </body>

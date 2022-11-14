@@ -28,6 +28,8 @@ urlpatterns = [
     path('remove_friend/', remove_from_friends, name='remove-friend'),
     path('my-invites/accept/', accept_invitation, name='accept-invite'),
     path('my-invites/reject/', reject_invitation, name='reject-invite'),
+    path('profiles/<str:userid>', views.profilesView, name='profiles'),
+    path('schedules/<str:userid>', views.schedulesView, name='schedules'),
     #path('login', include('main.urls')),
 
 ]

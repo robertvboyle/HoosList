@@ -338,3 +338,63 @@ def remove_from_friends(request):
 
     return redirect("/")
 
+class DepartmentView(generic.ListView):
+    template_name = 'louslist/department.html'
+
+    def get_context_data(self, **kwargs):
+        dept = self.kwargs.get('department')
+        context = super(DepartmentView, self).get_context_data(**kwargs)
+        url = "http://luthers-list.herokuapp.com/api/dept/%s/?format=json" % (dept)
+        response = urllib.request.urlopen(url)
+        data = json.loads(response.read())
+
+
+        context= {
+            'data' : data,
+        }
+
+        return context
+
+    def get_queryset(self):
+        return ''
+
+def profilesView(request, userid):
+    user = request.user
+    user2 = User.objects.get(id=userid)
+    if user == user2:
+        return redirect('louslist:profile')
+    else:
+        
+        context = {'user2': user2}
+        return render(request, 'louslist/profiles.html', context)
+
+
+def schedulesView(request, userid):
+    if(request.method == "POST"):
+        user2id = request.POST.get('userid')
+        courseid = request.POST.get('courseid')
+        course = Course.objects.get(course_id=courseid)
+        s = Schedule.objects.get(userID=user2id)
+        s.courses.add(course)
+        s.save()
+
+    areFriends = False
+    user = request.user
+    user2 = User.objects.get(id=userid)
+
+    if user2 in user.profile.friends.all():
+        areFriends = True
+    
+    if user == user2:
+        return redirect('louslist:schedule')
+    try:
+        courses = Schedule.objects.get(userID=userid).courses.all()
+    except:
+        s = Schedule(userID=userid)
+        s.save()
+        courses = s.courses.all()
+    context = {'courses': courses, 'user2': user2, 'friends': areFriends}
+    return render(request, 'louslist/friendschedules.html', context)
+
+    
+

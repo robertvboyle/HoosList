@@ -31,5 +31,6 @@ urlpatterns = [
     path('profiles/<str:userid>', views.profilesView, name='profiles'),
     path('schedules/<str:userid>', views.schedulesView, name='schedules'),
     #path('login', include('main.urls')),
+    path('addComment/', views.addComment, name="addComment"),
 
 ]

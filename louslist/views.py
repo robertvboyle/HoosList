@@ -12,7 +12,7 @@ from django.db.models import Q
 
 import urllib, json
 
-from .models import Course, Schedule, User, Profile, Relationship
+from .models import Comment, Course, Schedule, User, Profile, Relationship
 
 
 class IndexView(generic.ListView):
@@ -178,11 +178,13 @@ def ScheduleView(request):
         s.save()
     try:
         courses = Schedule.objects.get(userID=request.user.id).courses.all()
+        schedule = Schedule.objects.get(userID=request.user.id)
     except:
         s = Schedule(userID=request.user.id)
         s.save()
         courses = s.courses.all()
-    context = {'courses': courses}
+        schedule = s
+    context = {'courses': courses, 'schedule': schedule}
     return render(request, 'louslist/schedule.html', context)
 
 def processClass(request):
@@ -389,12 +391,23 @@ def schedulesView(request, userid):
         return redirect('louslist:schedule')
     try:
         courses = Schedule.objects.get(userID=userid).courses.all()
+        schedule = Schedule.objects.get(userID=userid)
     except:
-        s = Schedule(userID=userid)
-        s.save()
-        courses = s.courses.all()
-    context = {'courses': courses, 'user2': user2, 'friends': areFriends}
+        schedule = Schedule(userID=userid)
+        schedule.save()
+        courses = schedule.courses.all()
+    context = {'courses': courses, 'user2': user2, 'friends': areFriends, 'schedule': schedule}
     return render(request, 'louslist/friendschedules.html', context)
 
     
-
+def addComment(request):
+    if(request.method == "POST"):
+        userid = request.POST.get('userid')
+        schedule = Schedule.objects.get(userID=userid)
+        comment = Comment()
+        comment.schedule = schedule
+        comment.name = request.POST.get('name')
+        comment.text = request.POST.get("text")
+        next = request.POST.get("next")
+        comment.save()
+    return HttpResponseRedirect(next)

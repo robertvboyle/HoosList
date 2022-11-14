@@ -94,4 +94,23 @@
     </li>
     
   </ul>
+  <h2>Comments</h2>
+  <form action="/addComment/" method="post">
+    {% csrf_token %}
+    <input type="hidden" id="userid" name="userid" value="{{user.id}}">
+    <input type="hidden" id="name" name="name" value="{{user.first_name}} {{user.last_name}}">
+    <input type="hidden" name="next" value="{{ request.path }}">
+    <input type="text" id="text" name="text">
+    <input type="submit" value="Post">
+  </form>
+  {% if not schedule.comments.all %}
+    None
+  {% else %}
+    {% for comment in schedule.comments.all %}
+      <br>
+      <strong>{{ comment.name }} - {{ comment.date }}</strong> 
+      {{ comment.text }}
+    {% endfor %}
+  {% endif %}
+
 </html>

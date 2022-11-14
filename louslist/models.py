@@ -111,6 +111,11 @@ class Course(models.Model):
     def __str__(self):
         return self.subject + " " + str(self.number) + "Section: " + str(self.section)
 
+class Comment(models.Model):
+    schedule = models.ForeignKey(Schedule,on_delete=models.CASCADE,related_name='comments')
+    name = models.CharField(max_length=80)
+    text = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
 
 
 # class ClassModel(models.Model):
@@ -125,8 +130,3 @@ class Course(models.Model):
 #     seatsOpen = models.IntegerField(max_length=3)
 
 
-class Comment(models.Model):
-    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="comments")
-    name = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)

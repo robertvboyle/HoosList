@@ -63,10 +63,10 @@
         </div>
     {% endif %} 
 
-    <div class="row">
+    <div class="row mb-4">
         {% for obj in object_list %}
         <div class="col-sm-3 d-flex justify-content-around mt-5">
-            <div class="card " style="width: 14rem;">
+            <div class="card " style="width: 16rem;">
                 <img class="card-img-top" src="{{obj.user.socialaccount_set.all.0.get_avatar_url}}">
                 <div class="card-body">
                   <h5 class="card-title">{{ obj.user.first_name }} {{ obj.user.last_name }}</h5>
@@ -74,28 +74,25 @@
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">Username: {{ obj.user }}</li>
                   <li class="list-group-item">Bio: {{ obj.bio }}</li>
-                  <li class="list-group-item"><a href="/profiles/{{obj.user.id}}" class="btn btn-secondary">View Profile</a></li>
+                  <li class="list-group-item  d-flex justify-content-center"><a href="/profiles/{{obj.user.id}}" class="btn btn-secondary">View Profile</a></li>
 
                   {% if obj.user not in rel_receiver and obj.user not in rel_sender %}
-                  <li class="list-group-item">
+                  <li class="list-group-item  d-flex justify-content-center">
                   <form action='/send_invite/' method="POST">
                       {% csrf_token %}
                       <input type="hidden" name="profile_pk" value={{obj.pk}}>
-                      
-                          <button type="submit" class="btn btn-success">Add To Friends</button>
-                      
+                        <button type="submit" class="btn btn-success ">Add To Friends</button>
                   </form></li>
               {% endif %}
 
               {% if obj.user in rel_receiver and request.user not in obj.friends.all %}
-              <li class="list-group-item"> <button type="button" class="btn btn-warning" disabled>Pending</button> </li>
+              <li class="list-group-item  d-flex justify-content-center"> <button type="button" class="btn btn-warning" disabled>Pending</button> </li>
               {% endif %}
 
               {% if request.user in obj.friends.all %}
-              <li class="list-group-item"> <form action='/remove_friend/' method="POST">
+              <li class="list-group-item  d-flex justify-content-center"> <form action='/remove_friend/' method="POST">
                       {% csrf_token %}
                       <input type="hidden" name="profile_pk" value={{obj.pk}}>
-                      
                       <button type="submit" class="btn btn-danger">Remove Friend</button>
                   </form></li>
               {% endif %}

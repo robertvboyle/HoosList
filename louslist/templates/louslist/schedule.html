@@ -54,7 +54,7 @@
 </nav>
 
 <html>
-  <ul class="d-flex justify-content-center list-group px-5" style="padding-bottom: 80px">
+  <ul class="d-flex justify-content-center list-group px-5 mb-5">
   
     <div class="d-flex justify-content-between">
       <h4 class="pb-1 pt-4">Your Schedule</h2>
@@ -105,25 +105,42 @@
         </tbody>
       </table>
     </li>
-    
   </ul>
-  <h2>Comments</h2>
-  <form action="/addComment/" method="post">
-    {% csrf_token %}
-    <input type="hidden" id="userid" name="userid" value="{{user.id}}">
-    <input type="hidden" id="name" name="name" value="{{user.first_name}} {{user.last_name}}">
-    <input type="hidden" name="next" value="{{ request.path }}">
-    <input type="text" id="text" name="text">
-    <input type="submit" value="Post">
-  </form>
-  {% if not schedule.comments.all %}
-    None
-  {% else %}
-    {% for comment in schedule.comments.all %}
-      <br>
-      <strong>{{ comment.name }} - {{ comment.date }}</strong> 
-      {{ comment.text }}
-    {% endfor %}
-  {% endif %}
+
+  <div>
+    <h4 class="ms-5 pb-1 pt-4">Comments</h2>
+    <div class="card d-flex justify-content-center list-group mx-5 mb-5 bg-light">
+      <div class="card-body mx-3">
+    <form class="mb-5" action="/addComment/" method="post">
+      {% csrf_token %}
+      <input type="hidden" id="userid" name="userid" value="{{user.id}}">
+      <input type="hidden" id="name" name="name" value="{{user.first_name}} {{user.last_name}}">
+      <input type="hidden" name="next" value="{{ request.path }}">
+    
+      <div class="row my-3">
+        <div class="col-11"><input type ="text" placeholder="Leave a comment" class="form-control" id="text" name="text"></div>
+        <div class="col-1"><input type="submit" class="btn btn-primary" value="Post"></div>
+      </div>
+    </form>
+    {% if not schedule.comments.all %}
+    <div class="card mb-3" >
+      <div class="card-body">
+        <h5 class="card-title">No Comments</h5>
+      </div>
+    </div>
+    {% else %}
+      {% for comment in schedule.comments.all %}
+        <div class="card mb-3" >
+          <div class="card-body">
+            <h5 class="card-title">{{ comment.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ comment.date }}</h6>
+            <p class="card-text">{{ comment.text }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+    </div>
+    </div>
+  </div>
 
 </html>

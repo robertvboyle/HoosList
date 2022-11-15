@@ -63,7 +63,7 @@
         <center>
             <h2>Search Results For "{{searched}}"</h2>
         </center>
-        <ul class="d-flex justify-content-center list-group px-5" style="padding-bottom: 80px">
+        <ul class="d-flex justify-content-center list-group mb-5 px-5" style="padding-bottom: 80px">
         
           <div class="d-flex justify-content-between">
             <h4 class="pb-1 pt-4">Courses</h2>
@@ -75,24 +75,35 @@
               <thead>
                 <tr>
                   <th scope="col">Course</th>
-                  <th scope="col">Type</th>
+                  <th scope="col">Credits</th>
+                  <th scope="col">Days</th>
                   <th scope="col">Time</th>
                   <th scope="col">Instructor</th>
                   <th scope="col">Location</th>
                 </tr>
               </thead>
-              <tbody>
-                {% for course in courses %}
-                <tr>
-                  <td style="width:25%">{{course.subject}} {{course.number}} - {{course.title}}</td>
-                  <td style="width:15%">{{ course.credits }} Credits</td>
-                  <td style="width:25%">
-                    {{course.days}} {{ course.time }}
-                  </td>
-                  <td style="width:15%">{{course.instructor}}</td>
-                  <td style="width:15%">{{course.location}}</td>
-                  <td style="width:15%">{{course.location}}</td>
-                  {% if user.is_authenticated %}
+          <tbody>
+
+          {% for course in courses %}
+          <tr>
+            <td style="width:25%">{{course.subject}} {{course.number}} - {{course.title}}</td>
+            <td style="width:10%">{{ course.credits }} Credits</td> 
+            <td style="width:10%">{% for sp in course.days|splitDays %}
+              {{sp}}
+              <br>
+              <br>
+              {% endfor %}
+            </td>
+            <td style="width:18%">
+              {% for sp in course.time|splitTimes %}
+              {{sp}}
+              <br>
+              <br>
+              {% endfor %}
+            </td>
+            <td style="width:15%">{{course.instructor}}</td>
+            <td style="width:15%">{{course.location}}</td>
+            {% if user.is_authenticated %}
               
                     <form action="/processClass/" method="post">
                         {% csrf_token %}
@@ -114,11 +125,9 @@
                     </form>
                     
                 {% endif %}
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </li>
+          </tr>
+          {% endfor %}
+        </tbody>
           
         </ul>
       </html>

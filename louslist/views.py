@@ -416,9 +416,16 @@ def addComment(request):
 def searchView(request):
     if(request.method == "POST"):
         searched = request.POST.get('searched')
-        courses = Course.objects.filter(title__icontains = searched)
-        courses |= Course.objects.filter(subject__icontains = searched)
-        courses |= Course.objects.filter(instructor__icontains = searched)
+        splitSearch = searched.split(" ")
+        splitSearch.append("")
+        courses = None
+        if searched != "":
+            courses = Course.objects.filter(Q(title__icontains=searched) | Q(subject__icontains=searched) | Q(instructor__icontains=searched) | Q(number__icontains=searched) | (Q(subject__icontains=splitSearch[0]) & Q(number__icontains=splitSearch[1])))
+
+        # courses = Course.objects.filter(title__icontains = searched)
+        # courses |= Course.objects.filter(subject__icontains = searched)
+        # courses |= Course.objects.filter(instructor__icontains = searched)
+        # courses |= Course.objects.filter(number__icontains = searched)
         context = {'courses': courses, 'searched': searched}
         return render(request, 'louslist/search.html', context)
     else:

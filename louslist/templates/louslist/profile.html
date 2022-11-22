@@ -26,9 +26,9 @@
         </li>
         {% endif %}
         </ul>
-        <ul class="navbar-nav">
+        <ul class="navbar-nav d-flex align-items-center">
           <li class="nav-item">
-            <form class="d-flex" action="/search/" method="post">
+            <form class="d-flex my-3" action="/search/" method="post">
               {% csrf_token %}
               <input type="search" class="form-control rounded" placeholder="Search" name="searched" />
               <input class="btn btn-outline-secondary" type="submit" value="Search">
@@ -45,11 +45,12 @@
               <li><a class="dropdown-item" href="/logout/">Log out</a>
             </ul>
           </li>
-          <li class="nav-item mx-5">  </li>
+          
           {% else %}
           <a class ="nav-link" href="{% provider_login_url 'google' %}">Login</a>
           {% endif %}
-        </li>
+          <li class="nav-item mx-5">  </li>
+        
       </ul>
     </div>
   </nav>

@@ -430,3 +430,7 @@ def searchView(request):
         return render(request, 'louslist/search.html', context)
     else:
         return render(request, 'louslist/search.html')
+    
+
+
+# Work cited: https://www.youtube.com/@Pyplane

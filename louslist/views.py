@@ -189,7 +189,6 @@ def ScheduleView(request):
 
 def processClass(request):
     if(request.method == "POST"):
-
         #user = User.objects.get(id=userid)
 
         # When we make the user model, we will query the user by the context user id, then add the class to the user's list of classes
@@ -251,8 +250,12 @@ def processClass(request):
       
         try:
             schedule = Schedule.objects.get(userID= userid) # If the course already exists, we don't want to add it again
-            schedule.save()
-            schedule.courses.add(form)    
+            try:
+                newForm = schedule.courses.get(title=form.title, subject=form.subject, number=form.number, credits=form.credits)
+            except:
+                schedule.courses.add(form)
+                schedule.save()
+              
         except:
             schedule = Schedule(userID= userid)
             schedule.save()

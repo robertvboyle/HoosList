@@ -12,7 +12,7 @@ from django.db.models import Q
 
 import urllib, json
 
-from .models import Comment, Course, Schedule, User, Profile, Relationship
+from .models import Course, Schedule, User, Profile, Relationship
 
 
 class IndexView(generic.ListView):
@@ -24,7 +24,7 @@ class IndexView(generic.ListView):
         response = urllib.request.urlopen(url)
         data = json.loads(response.read())
 
-        collegeArts = set(["AAS","MSP","AMST","GSMS","KICH","CREO", "ELA","HIME","NESC","COGS","ANTH","ARAB","ARAD","ARCY","ARTH","ARTR","ARTS","ASL","ASTR","BIOL","CASS","CHEM","CHIN","TURK","CHTR","CLAS","COLA","CPLT","DANC","DRAM","EALC","EAST","ECON","EGMT","ENCW","ENGL","ENWR","ETP","EVSC","FORU","FREN","FRTR","GDS","GERM","GETR","GREE","GSGS","GSSJ","GSVS","HEBR","HIAF","HIEA","HIEU","HILA","HIND","HISA","HIST","HIUS","HSCI","INST","ITAL","ITTR","JAPN","JPTR","JWST","KOR","LASE","LATI","LING","LNGS","MATH","MDST","MESA","MEST","MUSI","PERS","PETR","PHIL","PHYS","PHS","PLAP","PLCP","PLIR","PLPT","POL","PORT","POTR","PPL","PSYC","RELA","RELB","RELC","RELG","RELH","RELI","RELJ","RELS","RUSS","RUTR","SANS","SAST","SATR","SLAV","SLFK","SLTR","SOC","SPAN","SPTR","STAT","TBTN","URDU","USEM","WGS","YIDD"])
+        collegeArts = set(["AAS","MSP","AMST","KICH","CREO", "ELA","HIME","NESC","COGS","ANTH","ARAB","ARAD","ARCY","ARTH","ARTR","ARTS","ASL","ASTR","BIOL","CASS","CHEM","CHIN","TURK","CHTR","CLAS","COLA","CPLT","DANC","DRAM","EALC","EAST","ECON","EGMT","ENCW","ENGL","ENWR","ETP","EVSC","FORU","FREN","FRTR","GDS","GERM","GETR","GREE","GSGS","GSSJ","GSVS","HEBR","HIAF","HIEA","HIEU","HILA","HIND","HISA","HIST","HIUS","HSCI","INST","ITAL","ITTR","JAPN","JPTR","JWST","KOR","LASE","LATI","LING","LNGS","MATH","MDST","MESA","MEST","MUSI","PERS","PETR","PHIL","PHYS","PHS","PLAP","PLCP","PLIR","PLPT","POL","PORT","POTR","PPL","PSYC","RELA","RELB","RELC","RELG","RELH","RELI","RELJ","RELS","RUSS","RUTR","SANS","SAST","SATR","SLAV","SLFK","SLTR","SOC","SPAN","SPTR","STAT","TBTN","URDU","USEM","WGS","YIDD"])
         engineering = set(["CS","APMA","CE","BME","CHE","CPE","ECE","MSE","MAE","STS","SYS"])
         education = set(["EDHS","EDLF","EDIS","KINE","KLPA"])
         architecture = set(["ALAR","ARAH","ARCH","ARH","LAR","PLAC","PLAN","SARC"])
@@ -178,22 +178,20 @@ def ScheduleView(request):
         s.save()
     try:
         courses = Schedule.objects.get(userID=request.user.id).courses.all()
-        schedule = Schedule.objects.get(userID=request.user.id)
     except:
         s = Schedule(userID=request.user.id)
         s.save()
         courses = s.courses.all()
-        schedule = s
-    context = {'courses': courses, 'schedule': schedule}
+    context = {'courses': courses}
     return render(request, 'louslist/schedule.html', context)
 
 def processClass(request):
     if(request.method == "POST"):
+
         #user = User.objects.get(id=userid)
 
         # When we make the user model, we will query the user by the context user id, then add the class to the user's list of classes
         userid = request.POST.get('userid')
-        next = request.POST.get("next")
         form = Course()
         form.title = request.POST.get("title") 
         department = request.POST.get("department")
@@ -250,19 +248,15 @@ def processClass(request):
       
         try:
             schedule = Schedule.objects.get(userID= userid) # If the course already exists, we don't want to add it again
-            try:
-                newForm = schedule.courses.get(title=form.title, subject=form.subject, number=form.number, credits=form.credits)
-            except:
-                schedule.courses.add(form)
-                schedule.save()
-              
+            schedule.save()
+            schedule.courses.add(form)    
         except:
             schedule = Schedule(userID= userid)
             schedule.save()
             schedule.courses.add(form)
             # If the course doesn't exist, save it to the database
         
-    return HttpResponseRedirect(next)
+    return HttpResponseRedirect(reverse('louslist:department', kwargs={'department': department}))
 
 def logout_user(request):
     logout(request)
@@ -367,6 +361,7 @@ class DepartmentView(generic.ListView):
 def profilesView(request, userid):
     user = request.user
     user2 = User.objects.get(id=userid)
+
     if user == user2:
         return redirect('louslist:profile')
     else:
@@ -395,45 +390,12 @@ def schedulesView(request, userid):
         return redirect('louslist:schedule')
     try:
         courses = Schedule.objects.get(userID=userid).courses.all()
-        schedule = Schedule.objects.get(userID=userid)
     except:
-        schedule = Schedule(userID=userid)
-        schedule.save()
-        courses = schedule.courses.all()
-    context = {'courses': courses, 'user2': user2, 'friends': areFriends, 'schedule': schedule}
+        s = Schedule(userID=userid)
+        s.save()
+        courses = s.courses.all()
+    context = {'courses': courses, 'user2': user2, 'friends': areFriends}
     return render(request, 'louslist/friendschedules.html', context)
 
     
-def addComment(request):
-    if(request.method == "POST"):
-        userid = request.POST.get('userid')
-        schedule = Schedule.objects.get(userID=userid)
-        comment = Comment()
-        comment.schedule = schedule
-        comment.name = request.POST.get('name')
-        comment.text = request.POST.get("text")
-        next = request.POST.get("next")
-        comment.save()
-    return HttpResponseRedirect(next)
 
-def searchView(request):
-    if(request.method == "POST"):
-        searched = request.POST.get('searched')
-        splitSearch = searched.split(" ")
-        splitSearch.append("")
-        courses = None
-        if searched != "":
-            courses = Course.objects.filter(Q(title__icontains=searched) | Q(subject__icontains=searched) | Q(instructor__icontains=searched) | Q(number__icontains=searched) | (Q(subject__icontains=splitSearch[0]) & Q(number__icontains=splitSearch[1])))
-
-        # courses = Course.objects.filter(title__icontains = searched)
-        # courses |= Course.objects.filter(subject__icontains = searched)
-        # courses |= Course.objects.filter(instructor__icontains = searched)
-        # courses |= Course.objects.filter(number__icontains = searched)
-        context = {'courses': courses, 'searched': searched}
-        return render(request, 'louslist/search.html', context)
-    else:
-        return render(request, 'louslist/search.html')
-    
-
-
-# Work cited: https://www.youtube.com/@Pyplane
